@@ -46,9 +46,18 @@ public class SysSettingController extends BaseController{
 	
 	@RequestMapping(value = "/getSystemStatus", method = RequestMethod.POST)
 	public @ResponseBody ModelAndView getSystemStatus(ModelMap model, HttpServletRequest request, HttpServletResponse response, @RequestBody SysSettingCommand cmd) {
-		HttpEntity<PythonResponse> pr = restTemplateService.getSystemStatus();
 		
-		model.put("data", pr.getBody());
+		try {
+			HttpEntity<PythonResponse> pr = restTemplateService.getSystemStatus();
+			model.put("data", pr.getBody());
+			model.put("status", BaseController.STATUS_SUCCESS);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			log.error("getSystemStatus fail!!", e);
+			return getFailureModelAndView(model, "");
+		}
+	
 		
 		ModelAndView mav = new ModelAndView("jsonView", model);
 		return mav;
