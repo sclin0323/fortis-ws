@@ -45,8 +45,6 @@ public class UserDeviceController extends BaseController {
 		int start = Integer.parseInt(request.getParameter("start"));
 		int limit = Integer.parseInt(request.getParameter("limit"));
 
-		log.info(page + " " + start + " " + limit);
-
 		List dataList = userDeviceService.fetchBySearchWord(searchWord, page, start, limit);
 		long total = userDeviceService.fetchCountBySearchWord(searchWord, page, start, limit);
 
@@ -61,13 +59,18 @@ public class UserDeviceController extends BaseController {
 			return getFailureModelAndView(model, validateMsg);
 		}
 
-		PythonResponse r1 = restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
-		// 檢查回傳的資料，使否出現網路卡號存在失敗
-		if (restTemplateService.validErrorCode(r1, -15) == false) {
-			return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
+		try {
+			PythonResponse r1 = restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
+			// 檢查回傳的資料，使否出現網路卡號存在失敗
+			if (restTemplateService.validErrorCode(r1, -15) == false) {
+				return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
+			}
+			restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName());
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("連線設備執行指令失敗!! ", e);
+			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
 		}
-
-		restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName());
 
 		// 新增人員訊息
 		Map map = userDeviceService.create(cmd);
@@ -83,10 +86,16 @@ public class UserDeviceController extends BaseController {
 			return getFailureModelAndView(model, validateMsg);
 		}
 
-		PythonResponse r1 = restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
-		// 檢查回傳的資料，使否出現網路卡號存在失敗
-		if (restTemplateService.validErrorCode(r1, -15) == false) {
-			return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
+		try {
+			PythonResponse r1 = restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
+			// 檢查回傳的資料，使否出現網路卡號存在失敗
+			if (restTemplateService.validErrorCode(r1, -15) == false) {
+				return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("連線設備執行指令失敗!! ", e);
+			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
 		}
 
 		// 更新人員訊息
@@ -99,9 +108,14 @@ public class UserDeviceController extends BaseController {
 	public @ResponseBody ModelAndView delete(ModelMap model, HttpServletRequest request) {
 		String deviceName = request.getParameter("deviceName");
 
-		restTemplateService.unselectConfigUserDeviceGroups(deviceName);
-
-		restTemplateService.deleteConfigUserDevice(deviceName);
+		try {
+			restTemplateService.unselectConfigUserDeviceGroups(deviceName);
+			restTemplateService.deleteConfigUserDevice(deviceName);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("連線設備執行指令失敗!! ", e);
+			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
+		}
 
 		Map map = userDeviceService.delete(deviceName);
 

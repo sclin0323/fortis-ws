@@ -41,7 +41,7 @@ public abstract class BaseController {
 	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {
-
+	
 	}
 	
 	// 回傳成功

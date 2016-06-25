@@ -23,52 +23,50 @@ import com.hoyoung.fortis.services.SysSettingService;
 
 @Controller
 @RequestMapping(value = "/sysSetting")
-public class SysSettingController extends BaseController{
-	
+public class SysSettingController extends BaseController {
+
 	final static Logger log = Logger.getLogger(UserDeviceController.class);
-	
+
 	@Autowired
 	private SysSettingService sysSettingService;
-	
+
 	@Autowired
 	private RestTemplateService restTemplateService;
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView read(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-		
+
 		Map map = sysSettingService.fetchById("SETTING001");
-		if(map == null) {
+		if (map == null) {
 			getFailureModelAndView(model, "設定載入失敗!! 請初始化設定");
 		}
-		
+
 		return getSuccessModelAndView(model, map);
 	}
-	
+
 	@RequestMapping(value = "/getSystemStatus", method = RequestMethod.POST)
-	public @ResponseBody ModelAndView getSystemStatus(ModelMap model, HttpServletRequest request, HttpServletResponse response, @RequestBody SysSettingCommand cmd) {
-		
+	public @ResponseBody ModelAndView getSystemStatus(ModelMap model, HttpServletRequest request,
+			HttpServletResponse response, @RequestBody SysSettingCommand cmd) {
+
 		try {
 			HttpEntity<PythonResponse> pr = restTemplateService.getSystemStatus();
 			model.put("data", pr.getBody());
 			model.put("status", BaseController.STATUS_SUCCESS);
-			
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			log.error("getSystemStatus fail!!", e);
-			return getFailureModelAndView(model, "");
+			log.error("連線存取設備狀態失敗!! ", e);
+			return getFailureModelAndView(model, "連線存取設備狀態失敗!! ");
 		}
-	
-		
+
 		ModelAndView mav = new ModelAndView("jsonView", model);
 		return mav;
 	}
-	
-	
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public @ResponseBody ModelAndView add(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-		
+
 		sysSettingService.delete("SETTING001");
-		
+
 		SysSettingCommand cmd = new SysSettingCommand();
 		cmd.setSysSettingId("SETTING001");
 		cmd.setName("fortinet 50d");
@@ -80,18 +78,18 @@ public class SysSettingController extends BaseController{
 		cmd.setDeviceGroup("group name");
 		cmd.setCrtUid("sysadmin");
 		cmd.setCrtName("sysadmin");
-		
+
 		Map map = sysSettingService.create(cmd);
-		
+
 		return getSuccessModelAndView(model, map);
 	}
-	
+
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public @ResponseBody ModelAndView update(ModelMap model, @RequestBody SysSettingCommand cmd) {
-		
+
 		Map map = sysSettingService.update(cmd);
-		
+
 		return getSuccessModelAndView(model, map);
 	}
-	
+
 }
