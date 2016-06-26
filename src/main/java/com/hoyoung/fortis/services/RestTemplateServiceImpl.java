@@ -18,6 +18,8 @@ import com.hoyoung.fortis.python.PythonResponse;
 
 public class RestTemplateServiceImpl implements RestTemplateService {
 	final static Logger log = Logger.getLogger(RestTemplateServiceImpl.class);
+	
+	private final static String urlPrefix = "http://140.128.71.35:8000/fortinet/";
 
 	@Autowired(required = true)
 	protected FortisDAO fortisDAO;
@@ -33,7 +35,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 
 		UriComponentsBuilder builder = UriComponentsBuilder
-				.fromHttpUrl("http://140.128.71.35:8000/fortis_wspy/editConfigUserDevice/")
+				.fromHttpUrl(urlPrefix+"editConfigUserDevice/")
 				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
 				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword())
 				.queryParam("deviceName", deviceName).queryParam("macAddress", macAddress);
@@ -55,7 +57,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 
 		UriComponentsBuilder builder = UriComponentsBuilder
-				.fromHttpUrl("http://140.128.71.35:8000/fortis_wspy/appendConfigUserDeviceGroups/")
+				.fromHttpUrl(urlPrefix+"appendConfigUserDeviceGroups/")
 				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
 				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword())
 				.queryParam("deviceName", deviceName).queryParam("groupName", setting.getDeviceGroup());
@@ -81,7 +83,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 
 		UriComponentsBuilder builder = UriComponentsBuilder
-				.fromHttpUrl("http://140.128.71.35:8000/fortis_wspy/unselectConfigUserDeviceGroups/")
+				.fromHttpUrl(urlPrefix+"unselectConfigUserDeviceGroups/")
 				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
 				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword())
 				.queryParam("deviceName", deviceName).queryParam("groupName", setting.getDeviceGroup());
@@ -106,7 +108,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 
 		UriComponentsBuilder builder = UriComponentsBuilder
-				.fromHttpUrl("http://140.128.71.35:8000/fortis_wspy/deleteConfigUserDevice/")
+				.fromHttpUrl(urlPrefix+"deleteConfigUserDevice/")
 				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
 				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword())
 				.queryParam("deviceName", userDeviceId);
@@ -131,7 +133,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
 
 		UriComponentsBuilder builder = UriComponentsBuilder
-				.fromHttpUrl("http://140.128.71.35:8000/fortis_wspy/getSystemStatus/")
+				.fromHttpUrl(urlPrefix+"getSystemStatus/")
 				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
 				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword());
 

@@ -81,6 +81,14 @@ public class UserDeviceController extends BaseController {
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public @ResponseBody ModelAndView update(ModelMap model, @RequestBody UserDeviceCommand cmd) {
 
+		// 檢查網卡是否有異動，如果沒有異動，直接更新資料。
+		if(userDeviceService.isUpdateMacAddress(cmd) == false) {
+			// 更新人員訊息
+			Map map = userDeviceService.update(cmd);
+			return getSuccessModelAndView(model, map);
+		}
+		
+		//  網卡異動檢核網卡是否重複。
 		String validateMsg = userDeviceService.validateUpdate(cmd);
 		if (validateMsg != null) {
 			return getFailureModelAndView(model, validateMsg);

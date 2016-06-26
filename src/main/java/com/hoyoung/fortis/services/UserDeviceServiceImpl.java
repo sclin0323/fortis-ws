@@ -103,17 +103,25 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 	public String validateUpdate(Object obj) {
 		UserDeviceCommand cmd = (UserDeviceCommand) obj;
 		
-		// 檢核 2. 網卡除了自己是否已經存在
+		// 檢核網卡是否已經存在
 		List<UserDevice> list = fortisDAO.findByProperty(getEntityClass(), "macAddress", cmd.getMacAddress());
 		if(list.size() >0) {
-			for(UserDevice o : list) {
-				if(o.getDeviceName() != cmd.getDeviceName()) {
-					return "該 Mac Address 已經存在!!";
-				}
-			}
+					return "該網卡卡號 (mac address) 已經存在!!";
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public boolean isUpdateMacAddress(UserDeviceCommand cmd) {
+		
+		UserDevice o = (UserDevice) fortisDAO.findById(getEntityClass(), cmd.getDeviceName());
+		
+		if(o.getMacAddress().equals(cmd.getMacAddress())) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override
@@ -182,6 +190,8 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 	protected Class getEntityClass() {
 		return UserDevice.class;
 	}
+
+
 
 
 
