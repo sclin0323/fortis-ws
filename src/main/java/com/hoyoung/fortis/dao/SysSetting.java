@@ -26,7 +26,6 @@ public class SysSetting implements java.io.Serializable {
 	private String loginName;
 	private String password;
 	private Integer deviceLimit;
-	private String deviceGroup;
 	private String crtUid;
 	private String crtName;
 	private Date crtDate;
@@ -44,8 +43,7 @@ public class SysSetting implements java.io.Serializable {
 
 	/** minimal constructor */
 	public SysSetting(String sysSettingId, String name, String hostname, Integer port, String loginName,
-			String password, Integer deviceLimit, String deviceGroup, String crtUid, String crtName, Date crtDate,
-			Time crtTime) {
+			String password, Integer deviceLimit, String crtUid, String crtName, Date crtDate, Time crtTime) {
 		this.sysSettingId = sysSettingId;
 		this.name = name;
 		this.hostname = hostname;
@@ -53,7 +51,6 @@ public class SysSetting implements java.io.Serializable {
 		this.loginName = loginName;
 		this.password = password;
 		this.deviceLimit = deviceLimit;
-		this.deviceGroup = deviceGroup;
 		this.crtUid = crtUid;
 		this.crtName = crtName;
 		this.crtDate = crtDate;
@@ -62,8 +59,8 @@ public class SysSetting implements java.io.Serializable {
 
 	/** full constructor */
 	public SysSetting(String sysSettingId, String name, String hostname, Integer port, String loginName,
-			String password, Integer deviceLimit, String deviceGroup, String crtUid, String crtName, Date crtDate,
-			Time crtTime, String updUid, String updName, Date updDate, Time updTime) {
+			String password, Integer deviceLimit, String crtUid, String crtName, Date crtDate, Time crtTime,
+			String updUid, String updName, Date updDate, Time updTime) {
 		this.sysSettingId = sysSettingId;
 		this.name = name;
 		this.hostname = hostname;
@@ -71,7 +68,6 @@ public class SysSetting implements java.io.Serializable {
 		this.loginName = loginName;
 		this.password = password;
 		this.deviceLimit = deviceLimit;
-		this.deviceGroup = deviceGroup;
 		this.crtUid = crtUid;
 		this.crtName = crtName;
 		this.crtDate = crtDate;
@@ -153,16 +149,6 @@ public class SysSetting implements java.io.Serializable {
 
 	public void setDeviceLimit(Integer deviceLimit) {
 		this.deviceLimit = deviceLimit;
-	}
-
-	@Column(name = "DEVICE_GROUP", nullable = false, length = 20)
-
-	public String getDeviceGroup() {
-		return this.deviceGroup;
-	}
-
-	public void setDeviceGroup(String deviceGroup) {
-		this.deviceGroup = deviceGroup;
 	}
 
 	@Column(name = "CRT_UID", nullable = false, length = 20)

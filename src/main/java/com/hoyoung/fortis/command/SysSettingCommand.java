@@ -12,7 +12,7 @@ public class SysSettingCommand {
 	private String loginName;
 	private String password;
 	private Integer deviceLimit;
-	private String deviceGroup;
+	
 	private String crtUid;
 	private String crtName;
 	private Date crtDate;
@@ -75,14 +75,6 @@ public class SysSettingCommand {
 	
 	public void setDeviceLimit(Integer deviceLimit) {
 		this.deviceLimit = deviceLimit;
-	}
-	
-	public String getDeviceGroup() {
-		return deviceGroup;
-	}
-	
-	public void setDeviceGroup(String deviceGroup) {
-		this.deviceGroup = deviceGroup;
 	}
 	
 	public String getCrtUid() {

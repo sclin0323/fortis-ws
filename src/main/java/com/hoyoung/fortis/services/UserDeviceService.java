@@ -15,4 +15,7 @@ public interface UserDeviceService extends BaseService{
 
 		// 檢查是否有異動網卡
 		public boolean isUpdateMacAddress(UserDeviceCommand cmd);
+		
+		// 檢查是否有異動使用者群組
+		public boolean isUpdateDeviceGroup(UserDeviceCommand cmd);
 }

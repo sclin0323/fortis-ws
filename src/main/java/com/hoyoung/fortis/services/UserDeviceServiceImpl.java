@@ -83,6 +83,7 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 
 		UserDevice o = new UserDevice();
 		o.setDeviceName(cmd.getDeviceName());
+		o.setDeviceGroup(cmd.getDeviceGroup());
 		o.setApplicantDate(new Date());
 		o.setApplicantName(cmd.getApplicantName());
 		o.setApplicantTime(new Time(new Date().getTime()));
@@ -123,6 +124,17 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 		
 		return true;
 	}
+	
+	@Override
+	public boolean isUpdateDeviceGroup(UserDeviceCommand cmd) {
+		UserDevice o = (UserDevice) fortisDAO.findById(getEntityClass(), cmd.getDeviceName());
+		
+		if(o.getDeviceGroup().equals(cmd.getDeviceGroup())) {
+			return false;
+		}
+		
+		return true;
+	}
 
 	@Override
 	public Map<String, Object> update(Object obj) {
@@ -132,6 +144,7 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 
 		UserDevice o = (UserDevice) fortisDAO.findById(getEntityClass(), cmd.getDeviceName());
 
+		o.setDeviceGroup(cmd.getDeviceGroup());
 		o.setApplicantDate(new Date());
 		o.setApplicantName(cmd.getApplicantName());
 		o.setApplicantTime(new Time(new Date().getTime()));
@@ -167,6 +180,8 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 		
 		if (isFull) {
 			m.put("deviceName", o.getDeviceName());
+			
+			m.put("deviceGroup", o.getDeviceGroup());
 			m.put("applicantId", o.getApplicantId());
 			m.put("applicantName", o.getApplicantName());
 			m.put("applicantDate", toDateString(o.getApplicantDate()));
@@ -190,6 +205,8 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 	protected Class getEntityClass() {
 		return UserDevice.class;
 	}
+
+	
 
 
 

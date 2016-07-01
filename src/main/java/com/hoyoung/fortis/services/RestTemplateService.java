@@ -8,9 +8,9 @@ public interface RestTemplateService {
 	
 	public PythonResponse editConfigUserDevice(String deviceName,String macAddress);
 	
-	public HttpEntity<PythonResponse> appendConfigUserDeviceGroups(String deviceName);
+	public HttpEntity<PythonResponse> appendConfigUserDeviceGroups(String deviceName,String deviceGroup);
 
-	public HttpEntity<PythonResponse> unselectConfigUserDeviceGroups(String deviceName);
+	public HttpEntity<PythonResponse> unselectConfigUserDeviceGroups(String deviceName, String deviceGroup);
 
 	public HttpEntity<PythonResponse> deleteConfigUserDevice(String userDeviceId);
 

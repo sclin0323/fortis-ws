@@ -75,7 +75,6 @@ public class SysSettingController extends BaseController {
 		cmd.setLoginName("admin");
 		cmd.setPassword("password");
 		cmd.setDeviceLimit(0);
-		cmd.setDeviceGroup("group name");
 		cmd.setCrtUid("sysadmin");
 		cmd.setCrtName("sysadmin");
 

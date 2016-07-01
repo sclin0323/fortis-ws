@@ -23,7 +23,6 @@ public class SysSettingServiceImpl extends BaseServiceImpl implements SysSetting
 		o.setLoginName(cmd.getLoginName());
 		o.setPassword(cmd.getPassword());
 		o.setDeviceLimit(cmd.getDeviceLimit());
-		o.setDeviceGroup(cmd.getDeviceGroup());
 		
 		o.setCrtUid(cmd.getCrtUid());
 		o.setCrtName(cmd.getCrtName());
@@ -47,7 +46,6 @@ public class SysSettingServiceImpl extends BaseServiceImpl implements SysSetting
 		o.setLoginName(cmd.getLoginName());
 		o.setPassword(cmd.getPassword());
 		o.setDeviceLimit(cmd.getDeviceLimit());
-		o.setDeviceGroup(cmd.getDeviceGroup());
 		
 		o.setUpdUid(cmd.getUpdUid());
 		o.setUpdName(cmd.getUpdName());
@@ -85,7 +83,6 @@ public class SysSettingServiceImpl extends BaseServiceImpl implements SysSetting
 			m.put("loginName", o.getLoginName());
 			m.put("password", o.getPassword());
 			m.put("deviceLimit", o.getDeviceLimit());
-			m.put("deviceGroup", o.getDeviceGroup());
 			
 			
 			m.put("crtUid", o.getCrtUid());

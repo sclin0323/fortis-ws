@@ -49,7 +49,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	}
 
 	@Override
-	public HttpEntity<PythonResponse> appendConfigUserDeviceGroups(String deviceName) {
+	public HttpEntity<PythonResponse> appendConfigUserDeviceGroups(String deviceName, String deviceGroup) {
 
 		SysSetting setting = (SysSetting) fortisDAO.findById(SysSetting.class, "SETTING001");
 
@@ -60,7 +60,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 				.fromHttpUrl(urlPrefix+"appendConfigUserDeviceGroups/")
 				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
 				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword())
-				.queryParam("deviceName", deviceName).queryParam("groupName", setting.getDeviceGroup());
+				.queryParam("deviceName", deviceName).queryParam("groupName", deviceGroup);
 
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 
@@ -76,7 +76,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	}
 
 	@Override
-	public HttpEntity<PythonResponse> unselectConfigUserDeviceGroups(String deviceName) {
+	public HttpEntity<PythonResponse> unselectConfigUserDeviceGroups(String deviceName, String deviceGroup) {
 		SysSetting setting = (SysSetting) fortisDAO.findById(SysSetting.class, "SETTING001");
 
 		HttpHeaders headers = new HttpHeaders();
@@ -86,7 +86,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 				.fromHttpUrl(urlPrefix+"unselectConfigUserDeviceGroups/")
 				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
 				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword())
-				.queryParam("deviceName", deviceName).queryParam("groupName", setting.getDeviceGroup());
+				.queryParam("deviceName", deviceName).queryParam("groupName", deviceGroup);
 
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 

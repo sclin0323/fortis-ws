@@ -33,6 +33,7 @@ public class UserDevice implements java.io.Serializable {
 	private String applicantName;
 	private Date applicantDate;
 	private Time applicantTime;
+	private String deviceGroup;
 
 	// Constructors
 
@@ -42,7 +43,8 @@ public class UserDevice implements java.io.Serializable {
 
 	/** minimal constructor */
 	public UserDevice(String deviceName, String applicantId, String macAddress, String crtUid, String crtName,
-			Date crtDate, Time crtTime, String applicantName, Date applicantDate, Time applicantTime) {
+			Date crtDate, Time crtTime, String applicantName, Date applicantDate, Time applicantTime,
+			String deviceGroup) {
 		this.deviceName = deviceName;
 		this.applicantId = applicantId;
 		this.macAddress = macAddress;
@@ -53,12 +55,13 @@ public class UserDevice implements java.io.Serializable {
 		this.applicantName = applicantName;
 		this.applicantDate = applicantDate;
 		this.applicantTime = applicantTime;
+		this.deviceGroup = deviceGroup;
 	}
 
 	/** full constructor */
 	public UserDevice(String deviceName, String applicantId, String macAddress, String crtUid, String crtName,
 			Date crtDate, Time crtTime, String updUid, String updName, Date updDate, Time updTime, String applicantName,
-			Date applicantDate, Time applicantTime) {
+			Date applicantDate, Time applicantTime, String deviceGroup) {
 		this.deviceName = deviceName;
 		this.applicantId = applicantId;
 		this.macAddress = macAddress;
@@ -73,6 +76,7 @@ public class UserDevice implements java.io.Serializable {
 		this.applicantName = applicantName;
 		this.applicantDate = applicantDate;
 		this.applicantTime = applicantTime;
+		this.deviceGroup = deviceGroup;
 	}
 
 	// Property accessors
@@ -219,6 +223,16 @@ public class UserDevice implements java.io.Serializable {
 
 	public void setApplicantTime(Time applicantTime) {
 		this.applicantTime = applicantTime;
+	}
+
+	@Column(name = "DEVICE_GROUP", nullable = false, length = 20)
+
+	public String getDeviceGroup() {
+		return this.deviceGroup;
+	}
+
+	public void setDeviceGroup(String deviceGroup) {
+		this.deviceGroup = deviceGroup;
 	}
 
 }

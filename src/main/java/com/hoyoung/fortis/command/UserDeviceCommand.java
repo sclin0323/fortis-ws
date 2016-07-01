@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class UserDeviceCommand {
 	private String deviceName;
+	private String deviceGroup;
 	private String applicantId;
 	private String macAddress;
 	private String crtUid;
@@ -18,6 +19,18 @@ public class UserDeviceCommand {
 	private String applicantName;
 	private Date applicantDate;
 	private Time applicantTime;
+	
+	
+	public String getDeviceGroup() {
+		return deviceGroup;
+	}
+	
+
+	public void setDeviceGroup(String deviceGroup) {
+		this.deviceGroup = deviceGroup;
+	}
+	
+
 	public String getDeviceName() {
 		return deviceName;
 	}

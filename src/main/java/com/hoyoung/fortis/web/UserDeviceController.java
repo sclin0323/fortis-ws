@@ -65,7 +65,7 @@ public class UserDeviceController extends BaseController {
 			if (restTemplateService.validErrorCode(r1, -15) == false) {
 				return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
 			}
-			restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName());
+			restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName(), cmd.getDeviceGroup());
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("連線設備執行指令失敗!! ", e);
@@ -80,7 +80,7 @@ public class UserDeviceController extends BaseController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public @ResponseBody ModelAndView update(ModelMap model, @RequestBody UserDeviceCommand cmd) {
-
+		
 		// 檢查網卡是否有異動，如果沒有異動，直接更新資料。
 		if(userDeviceService.isUpdateMacAddress(cmd) == false) {
 			// 更新人員訊息
@@ -110,14 +110,16 @@ public class UserDeviceController extends BaseController {
 		Map map = userDeviceService.update(cmd);
 
 		return getSuccessModelAndView(model, map);
+		
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public @ResponseBody ModelAndView delete(ModelMap model, HttpServletRequest request) {
 		String deviceName = request.getParameter("deviceName");
+		String deviceGroup = request.getParameter("deviceGroup");
 
 		try {
-			restTemplateService.unselectConfigUserDeviceGroups(deviceName);
+			restTemplateService.unselectConfigUserDeviceGroups(deviceName, deviceGroup);
 			restTemplateService.deleteConfigUserDevice(deviceName);
 		} catch (Exception e) {
 			e.printStackTrace();

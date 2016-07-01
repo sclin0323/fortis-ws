@@ -7,7 +7,14 @@
 
 	<!-- spring-security主要設定 -->
 	<http auto-config="true">
+	
+		
 		<intercept-url pattern="/**" access="ROLE_ADMIN" />
+		
+		<!-- 測試使用，正式環境請將註解 
+		<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		-->
+		
 		<http-basic />
 		<logout />
 	</http>
