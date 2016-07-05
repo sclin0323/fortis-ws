@@ -26,6 +26,7 @@ var barrels = [
     'app/routes/+forti-manage',
     'app/routes/+forti-user-device-manage',
     'app/ajax-waiting',
+    'app/routes/+sys-user',
 ];
 var cliSystemConfigPackages = {};
 barrels.forEach(function (barrelName) {

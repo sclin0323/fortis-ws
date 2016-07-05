@@ -16,6 +16,7 @@
 	<context:annotation-config/> 
 	
 	<bean id="restTemplateService" class="com.hoyoung.fortis.services.RestTemplateServiceImpl"></bean>
+	<bean id="sysUserService" class="com.hoyoung.fortis.services.SysUserServiceImpl"></bean>
 	<bean id="sysSettingService" class="com.hoyoung.fortis.services.SysSettingServiceImpl"></bean>
 	<bean id="userDeviceService" class="com.hoyoung.fortis.services.UserDeviceServiceImpl">
 		<property name="searchWordSql">

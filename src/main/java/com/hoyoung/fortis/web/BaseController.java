@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hoyoung.fortis.authorize.UserInfo;
+import com.hoyoung.fortis.services.SysUserService;
+
 public abstract class BaseController {
 	
 	private static final Log log = LogFactory.getLog(BaseController.class);
@@ -38,6 +41,8 @@ public abstract class BaseController {
 	public static final int STATUS_TRANSPORT_ERROR = -90;
 	public static final int STATUS_VALIDATION_ERROR = -4;
 	
+	@Autowired
+	protected SysUserService sysUserService;
 	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -97,6 +102,26 @@ public abstract class BaseController {
 		model.put("status", STATUS_LOGIN_SUCCESS);
 		ModelAndView mav = new ModelAndView("jsonView", model);
 		return mav;
+	}
+	
+	protected UserInfo getUserInfo(HttpServletRequest request){
+		
+		String userId = getLogonId(request);
+		if(userId != null) {
+			UserInfo userInfo = sysUserService.getUserInfoById(userId);
+			return userInfo;
+		}
+		
+		return null;
+		
+	}
+
+	protected String getLogonId(HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		if (principal != null) {
+			return principal.getName();
+		}
+		return null;
 	}
 	
 }

@@ -25,6 +25,26 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	protected FortisDAO fortisDAO;
 
 	RestTemplate rt = new RestTemplate();
+	
+	@Override
+	public PythonResponse reenableSystemInterface() {
+		SysSetting setting = (SysSetting) fortisDAO.findById(SysSetting.class, "SETTING001");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+
+		UriComponentsBuilder builder = UriComponentsBuilder
+				.fromHttpUrl(urlPrefix+"reenableSystemInterface/")
+				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
+				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword());
+		
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+
+		HttpEntity<PythonResponse> pythonResponse = rt.exchange(builder.build().encode().toUri(), HttpMethod.GET,
+				entity, PythonResponse.class);
+
+		return pythonResponse.getBody();
+	}
 
 	@Override
 	public PythonResponse editConfigUserDevice(String deviceName, String macAddress) {
@@ -157,5 +177,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		
 		return true;
 	}
+
+	
 
 }

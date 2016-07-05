@@ -21,9 +21,10 @@
 
 	<authentication-manager>
 		<authentication-provider>
-			<user-service>
-				<user name="admin" password="fortisadmin" authorities="ROLE_ADMIN" />
-			</user-service>
+			<password-encoder hash="md5"/>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select a.SYS_USER_ID as username, a.PASSWORD as password,true as enabled from SYS_USER a where a.SYS_USER_ID=?"
+				authorities-by-username-query="select a.SYS_USER_ID as username, a.ROLE as ROLE from SYS_USER a where a.SYS_USER_ID=?" />
 		</authentication-provider>
 	</authentication-manager>
 

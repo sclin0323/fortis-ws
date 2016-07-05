@@ -66,6 +66,8 @@ public class UserDeviceController extends BaseController {
 				return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
 			}
 			restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName(), cmd.getDeviceGroup());
+			
+			restTemplateService.reenableSystemInterface();
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("連線設備執行指令失敗!! ", e);
@@ -121,6 +123,7 @@ public class UserDeviceController extends BaseController {
 		try {
 			restTemplateService.unselectConfigUserDeviceGroups(deviceName, deviceGroup);
 			restTemplateService.deleteConfigUserDevice(deviceName);
+			restTemplateService.reenableSystemInterface();
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("連線設備執行指令失敗!! ", e);

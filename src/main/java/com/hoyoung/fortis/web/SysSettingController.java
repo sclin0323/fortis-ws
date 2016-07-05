@@ -36,6 +36,7 @@ public class SysSettingController extends BaseController {
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView read(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 
+		log.info("test.......");
 		Map map = sysSettingService.fetchById("SETTING001");
 		if (map == null) {
 			getFailureModelAndView(model, "設定載入失敗!! 請初始化設定");
