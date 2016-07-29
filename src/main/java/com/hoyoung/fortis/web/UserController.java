@@ -54,6 +54,10 @@ public class UserController extends BaseController {
 	public void ssologin(ModelMap model, HttpServletRequest request, HttpServletResponse response,  SingleSideOnCommand cmd) {
 		log.info("ssologin");
 		log.info(cmd.getSessionId());
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("abc123", cmd.getSessionId());
+		
 
 		try {
 			response.sendRedirect("/apply.html");
@@ -75,6 +79,10 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/initial", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView initial(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+		
+		log.info("== initial ==");
+		log.info(request.getSession().getAttribute("abc123"));
+		
 		
 		Map<String, Object> sysSetting = sysSettingService.fetchById("SETTING001");
 		if (sysSetting == null) {
