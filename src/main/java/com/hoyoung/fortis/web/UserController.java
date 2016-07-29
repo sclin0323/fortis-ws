@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -43,19 +44,17 @@ public class UserController extends BaseController {
 	@Autowired
 	private UserDeviceService userDeviceService;
 	
-	@RequestMapping(value = "/ssologin", method = RequestMethod.POST)
+	@RequestMapping(
+			value = "/ssologin", 
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE
+	)
 	public @ResponseBody ModelAndView ssologin(ModelMap model, HttpServletRequest request, @RequestBody SingleSideOnCommand cmd) {
 		log.info("ssologin");
 		
-		Map<String, Object> sysSetting = sysSettingService.fetchById("SETTING001");
-		if (sysSetting == null) {
-			getFailureModelAndView(model, "設定載入失敗!! 請初始化設定");
-		}
-		
-		//int deviceLimit = (Integer) sysSetting.get("deviceLimit");
-		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("deviceLimit",  sysSetting.get("deviceLimit"));
+		map.put("deviceLimit",  100);
 		
 		
 
