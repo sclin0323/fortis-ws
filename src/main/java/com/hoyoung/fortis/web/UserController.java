@@ -81,24 +81,26 @@ public class UserController extends BaseController {
 	public @ResponseBody ModelAndView initial(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		
 		log.info("== initial ==");
-		log.info(request.getSession().getAttribute("ssologin"));
-		
+		SingleSideOnCommand ssoCmd = (SingleSideOnCommand) request.getSession().getAttribute("ssologin");
+		if(ssoCmd == null) {
+			getFailureModelAndView(model, "尚未完成登入驗證，請從SSO e-Portal 登入連線。");
+		}
 		
 		Map<String, Object> sysSetting = sysSettingService.fetchById("SETTING001");
 		if (sysSetting == null) {
 			getFailureModelAndView(model, "設定載入失敗!! 請初始化設定");
 		}
-		
-		
-		
-		List datas = userDeviceService.fetchByApplicantId("guest-0");
-		
+	
+		List datas = userDeviceService.fetchByApplicantId(ssoCmd.getCn());
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("deviceLimit",  sysSetting.get("deviceLimit"));
 		map.put("userDevices",  datas);
 		
-		
+		map.put("ssologin",  request.getSession().getAttribute("ssologin"));
+		map.put("applicantId", ssoCmd.getCn());
+		map.put("applicantName", ssoCmd.getGivenName());
+		map.put("applicantDept", ssoCmd.getDirekParentDepartment()+"-"+ssoCmd.getDescription());
 
 		return getSuccessModelAndView(model, map);
 	}

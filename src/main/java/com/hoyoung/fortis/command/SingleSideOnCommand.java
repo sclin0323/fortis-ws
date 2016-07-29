@@ -2,17 +2,40 @@ package com.hoyoung.fortis.command;
 
 public class SingleSideOnCommand {
 	private String sessionId;
+	/*
+	 *  ( 帳號 ) 身份碼
+	 */
 	private String cn;
+	/*
+	 * 姓名
+	 */
 	private String givenName;
 	private String userPassword;
+	/*
+	 * 員工編號
+	 */
 	private String employeeNumber;
+	/*
+	 * 職稱
+	 */
 	private String title;
+	/*
+	 * 電子郵件 mail 
+	 */
 	private String mail;
 	private String svuserrole;
 	private String ou;
 	private String svuserclass;
 	private String svusertype;
 	private String departmentNumber;
+	/*
+	 * 上層單位名稱
+	 */
+	private String direkParentDepartment;
+	/*
+	 * 教職員單位名稱
+	 */
+	private String description;
 
 	public String getCn() {
 		return cn;
@@ -66,6 +89,34 @@ public class SingleSideOnCommand {
 		return title;
 	}
 	
+
+
+	public String getDirekParentDepartment() {
+		return direkParentDepartment;
+	}
+	
+
+
+
+	public void setDirekParentDepartment(String direkParentDepartment) {
+		this.direkParentDepartment = direkParentDepartment;
+	}
+	
+
+
+
+	public String getDescription() {
+		return description;
+	}
+	
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+
 
 
 	public void setTitle(String title) {
@@ -153,6 +204,16 @@ public class SingleSideOnCommand {
 
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "SingleSideOnCommand [sessionId=" + sessionId + ", cn=" + cn + ", givenName=" + givenName
+				+ ", userPassword=" + userPassword + ", employeeNumber=" + employeeNumber + ", title=" + title
+				+ ", mail=" + mail + ", svuserrole=" + svuserrole + ", ou=" + ou + ", svuserclass=" + svuserclass
+				+ ", svusertype=" + svusertype + ", departmentNumber=" + departmentNumber + "]";
 	}
 	
 	
