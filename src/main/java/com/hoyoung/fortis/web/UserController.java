@@ -102,7 +102,7 @@ public class UserController extends BaseController {
 		map.put("ssologin",  request.getSession().getAttribute("ssologin"));
 		map.put("applicantId", ssoCmd.getCn());
 		map.put("applicantName", ssoCmd.getGivenName());
-		map.put("applicantDept", ssoCmd.getDirekParentDepartment()+"-"+ssoCmd.getDescription());
+		map.put("applicantTitle", ssoCmd.getTitle());
 
 		return getSuccessModelAndView(model, map);
 	}

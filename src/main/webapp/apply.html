@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>校園無線網路網卡登記系統</title>
+    <link rel="icon" type="image/x-icon" href="nutc.ico">
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
     <!-- Load Bootstrap and JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
@@ -38,9 +39,9 @@
             url: '/web/user/initial'
         }).then(function successCallback(response) {
             console.info(response);
-            $scope.success = response.data.success;
+            $scope.status = response.data.status;
 
-            if($scope.success == false) {
+            if($scope.status == -1) {
                 alert(response.data.message);
                 return;
             }
@@ -49,7 +50,7 @@
             $scope.userDevices = response.data.data.userDevices;
             $scope.applicantId = response.data.data.applicantId;
             $scope.applicantName = response.data.data.applicantName;
-            $scope.applicantTitle = response.data.data.title;
+            $scope.applicantTitle = response.data.data.applicantTitle;
 
         }, function errorCallback(response) {
             console.info(response);
@@ -83,14 +84,14 @@
 
                                 <label class="col-md-2 control-label">申請者姓名</label>
                                 <div class="col-md-4">
-                                    <input ng-model="applicantId" class="form-control" type="text" disabled required>
+                                    <input ng-model="applicantName" class="form-control" type="text" disabled required>
                                 </div>
                             </div>  
 
                             <div class="form-group">
                                 <label class="col-md-2 control-label">職稱</label>
                                 <div class="col-md-4">
-                                    <input ng-model="title" class="form-control" type="text" disabled required>
+                                    <input ng-model="applicantTitle" class="form-control" type="text" disabled required>
                                 </div>
 
                                 <label class="col-md-2 control-label">網卡卡號</label>
@@ -103,7 +104,7 @@
                             <div class="form-group">
                                 
                                 <div class="col-md-offset-4 col-md-4">
-                                    <button type="submit" class="btn btn-primary btn-block" ng-disabled="!success">
+                                    <button type="submit" class="btn btn-primary btn-block" ng-disabled="status != 0">
                                         <span class="glyphicon glyphicon-saved" aria-hidden="true">新增網卡</span>
                                     </button>
                                     <p class="help-block">每個用戶最多申請 {{deviceLimit}} 個無線網路</p>
