@@ -56,7 +56,7 @@ public class UserController extends BaseController {
 		log.info(cmd.getSessionId());
 		
 		HttpSession session = request.getSession();
-		session.setAttribute("abc123", cmd.getSessionId());
+		session.setAttribute("ssologin", cmd);
 		
 
 		try {
@@ -81,7 +81,7 @@ public class UserController extends BaseController {
 	public @ResponseBody ModelAndView initial(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		
 		log.info("== initial ==");
-		log.info(request.getSession().getAttribute("abc123"));
+		log.info(request.getSession().getAttribute("ssologin"));
 		
 		
 		Map<String, Object> sysSetting = sysSettingService.fetchById("SETTING001");
