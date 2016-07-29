@@ -9,6 +9,8 @@ import com.hoyoung.fortis.command.UserDeviceCommand;
 public interface UserDeviceService extends BaseService{
 
 		// 查詢
+		public List fetchByApplicantId(String applicantId);
+	
 		public List fetchBySearchWord(String searchWord,int page,int start,int limit);
 		
 		public long fetchCountBySearchWord(String searchWord, int page, int start, int limit);

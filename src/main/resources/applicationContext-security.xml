@@ -8,6 +8,10 @@
 	<!-- spring-security主要設定 -->
 	<http auto-config="true">
 	
+		<intercept-url pattern="/web/user/ssologin" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/web/user/initial" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/apply.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/images/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		
 		<intercept-url pattern="/**" access="ROLE_ADMIN" />
 		

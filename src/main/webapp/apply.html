@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html ng-app="ApplyApp">
+
+<head>
+    <meta charset="utf-8">
+    <title>無線網路申請</title>
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <!-- Load Bootstrap and JQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootpag/1.0.7/jquery.bootpag.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+    <script>
+    var app = angular.module('ApplyApp', [])
+        .factory('myService', function() {
+            return {
+                getUrlVars: function() {
+                    var vars = {};
+                    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+                        function(m, key, value) {
+                            vars[key] = value;
+                        });
+                    return vars;
+                }
+            }
+        });
+
+    app.controller('ApplyCtrl', function($scope, $http, myService) {
+
+        // 取得 URL 的 PARAMETERS
+        console.info(myService.getUrlVars()["loginId"]);
+
+        // 初始化作業
+        $http({
+            method: 'GET',
+            url: '/web/user/initial'
+        }).then(function successCallback(response) {
+            console.info(response);
+            $scope.deviceLimit = response.data.data.deviceLimit;
+            $scope.userDevices = response.data.data.userDevices;
+
+        }, function errorCallback(response) {
+            console.info(response);
+
+        });
+
+    });
+    </script>
+</head>
+
+<body ng-controller='ApplyCtrl'>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-horizontal well">
+                    <img src="/images/ban.jpg" class="img-fluid center-block" alt="Responsive image">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <form>
+                    <div class="form-horizontal well">
+                        <fieldset>
+                            <legend>
+                                <h3><p class="text-center">無線網路申請系統</p></h3></legend>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">網卡卡號</label>
+                                <div class="col-md-4">
+                                    <input ng-model="macAddress" class="form-control" placeholder="00:FF:95:9F:68:16" type="text" required>
+                                    <p class="help-block">每個用戶最多申請 {{deviceLimit}} 個無線網路 {{macAddress}}</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        <span class="glyphicon glyphicon-saved" aria-hidden="true">新增網卡</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-12">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>編號</th>
+                            <th>設備名稱</th>
+                            <th>網路卡卡號</th>
+                            <th>申請者 ID</th>
+                            <th>申請日期</th>
+                            <th>申請時間</th>
+                            <th>修改</th>
+                            <th>刪除</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="userDevice in userDevices">
+                            <th>{{ $index + 1}}</th>
+                            <td>{{userDevice.deviceName}}</td>
+                            <td>{{userDevice.macAddress}}</td>
+                            <td>{{userDevice.applicantId}}</td>
+                            <td>{{userDevice.applicantDate}}</td>
+                            <td>{{userDevice.applicantTime}}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-warning ">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-danger">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-md-12 text-center">
+                    <div id="page-selection"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -58,6 +58,14 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 
 		return fortisDAO.fetchCountByCriteria(detachedCriteria);
 	}
+	
+	@Override
+	public List fetchByApplicantId(String applicantId) {
+	
+		List dataList = fortisDAO.findByProperty(getEntityClass(), "applicantId", applicantId);
+		
+		return toMapList(dataList, true);
+	}
 
 	@Override
 	public String validateCreate(Object obj) {
@@ -205,6 +213,8 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 	protected Class getEntityClass() {
 		return UserDevice.class;
 	}
+
+
 
 	
 
