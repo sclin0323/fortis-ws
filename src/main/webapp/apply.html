@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>無線網路申請</title>
+    <title>校園無線網路網卡登記系統</title>
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
     <!-- Load Bootstrap and JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
@@ -38,8 +38,18 @@
             url: '/web/user/initial'
         }).then(function successCallback(response) {
             console.info(response);
+            $scope.success = response.data.success;
+
+            if($scope.success == false) {
+                alert(response.data.message);
+                return;
+            }
+
             $scope.deviceLimit = response.data.data.deviceLimit;
             $scope.userDevices = response.data.data.userDevices;
+            $scope.applicantId = response.data.data.applicantId;
+            $scope.applicantName = response.data.data.applicantName;
+            $scope.applicantTitle = response.data.data.title;
 
         }, function errorCallback(response) {
             console.info(response);
@@ -63,18 +73,42 @@
                     <div class="form-horizontal well">
                         <fieldset>
                             <legend>
-                                <h3><p class="text-center">無線網路申請系統</p></h3></legend>
+                                <h3><p class="text-center">校園無線網路網卡登記系統</p></h3></legend>
+
                             <div class="form-group">
-                                <label class="col-md-4 control-label">網卡卡號</label>
+                                <label class="col-md-2 control-label">帳號 ID</label>
+                                <div class="col-md-4">
+                                    <input ng-model="applicantId" class="form-control" type="text" disabled required>
+                                </div>
+
+                                <label class="col-md-2 control-label">申請者姓名</label>
+                                <div class="col-md-4">
+                                    <input ng-model="applicantId" class="form-control" type="text" disabled required>
+                                </div>
+                            </div>  
+
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">職稱</label>
+                                <div class="col-md-4">
+                                    <input ng-model="title" class="form-control" type="text" disabled required>
+                                </div>
+
+                                <label class="col-md-2 control-label">網卡卡號</label>
                                 <div class="col-md-4">
                                     <input ng-model="macAddress" class="form-control" placeholder="00:FF:95:9F:68:16" type="text" required>
-                                    <p class="help-block">每個用戶最多申請 {{deviceLimit}} 個無線網路 {{macAddress}}</p>
+                                    
                                 </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary btn-block">
+                            </div> 
+
+                            <div class="form-group">
+                                
+                                <div class="col-md-offset-4 col-md-4">
+                                    <button type="submit" class="btn btn-primary btn-block" ng-disabled="!success">
                                         <span class="glyphicon glyphicon-saved" aria-hidden="true">新增網卡</span>
                                     </button>
+                                    <p class="help-block">每個用戶最多申請 {{deviceLimit}} 個無線網路</p>
                                 </div>
+
                             </div>
                         </fieldset>
                     </div>
@@ -88,6 +122,7 @@
                             <th>設備名稱</th>
                             <th>網路卡卡號</th>
                             <th>申請者 ID</th>
+                            <th>申請者 姓名</th>
                             <th>申請日期</th>
                             <th>申請時間</th>
                             <th>修改</th>
@@ -100,6 +135,7 @@
                             <td>{{userDevice.deviceName}}</td>
                             <td>{{userDevice.macAddress}}</td>
                             <td>{{userDevice.applicantId}}</td>
+                            <td>{{userDevice.applicantName}}</td>
                             <td>{{userDevice.applicantDate}}</td>
                             <td>{{userDevice.applicantTime}}</td>
                             <td>

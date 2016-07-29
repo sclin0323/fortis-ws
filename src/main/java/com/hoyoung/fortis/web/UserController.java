@@ -82,13 +82,15 @@ public class UserController extends BaseController {
 		
 		log.info("== initial ==");
 		SingleSideOnCommand ssoCmd = (SingleSideOnCommand) request.getSession().getAttribute("ssologin");
+		log.info("ssoCmd: "+ ssoCmd);
 		if(ssoCmd == null) {
-			getFailureModelAndView(model, "尚未完成登入驗證，請從SSO e-Portal 登入連線。");
+			log.info("session is null");
+			return getFailureModelAndView(model, "尚未完成登入驗證，請從SSO e-Portal 登入連線。");
 		}
 		
 		Map<String, Object> sysSetting = sysSettingService.fetchById("SETTING001");
 		if (sysSetting == null) {
-			getFailureModelAndView(model, "設定載入失敗!! 請初始化設定");
+			return getFailureModelAndView(model, "設定載入失敗!! 請初始化設定");
 		}
 	
 		List datas = userDeviceService.fetchByApplicantId(ssoCmd.getCn());
