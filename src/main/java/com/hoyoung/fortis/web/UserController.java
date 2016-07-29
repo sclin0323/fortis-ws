@@ -1,5 +1,6 @@
 package com.hoyoung.fortis.web;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,16 +51,27 @@ public class UserController extends BaseController {
 			consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE
 	)
-	public @ResponseBody ModelAndView ssologin(ModelMap model, HttpServletRequest request, @RequestBody SingleSideOnCommand cmd) {
+	public void ssologin(ModelMap model, HttpServletRequest request, HttpServletResponse response,  SingleSideOnCommand cmd) {
 		log.info("ssologin");
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("deviceLimit",  100);
-		
-		
+		log.info(cmd.getSessionId());
 
-		return getSuccessModelAndView(model, map);
+		try {
+			response.sendRedirect("/apply.html");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+	
+	@RequestMapping(value = "/redirect", method = RequestMethod.GET)
+	public void redirect(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			response.sendRedirect("/apply.html");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+		
 	
 	@RequestMapping(value = "/initial", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView initial(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
