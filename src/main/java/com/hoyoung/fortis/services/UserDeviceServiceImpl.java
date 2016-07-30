@@ -71,16 +71,21 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 	public String validateCreate(Object obj) {
 		UserDeviceCommand cmd = (UserDeviceCommand) obj;
 		
-		// 新增檢核 1. DeviceName 是否已經存在; 2. 網卡是否已經存在
+		// DeviceName 是否已經存在
 		UserDevice o = (UserDevice) fortisDAO.findById(getEntityClass(), cmd.getDeviceName());
 		if (o != null) {
 			return "該 Device Name 已經存在!!";
 		}
 		
+		// 網卡是否已經存在
 		List lists = fortisDAO.findByProperty(getEntityClass(), "macAddress", cmd.getMacAddress());
 		if(lists.size() >0) {
 			return "該 Mac Address 已經存在!!";
 		}
+		
+		// 網卡格式是否有錯
+		
+		
 		
 		return null;
 	}
@@ -97,9 +102,8 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 		o.setApplicantTime(new Time(new Date().getTime()));
 		o.setApplicantId(cmd.getApplicantId());
 		o.setMacAddress(cmd.getMacAddress());
-		
-		o.setCrtUid("sysadmin");
-		o.setCrtName("syaadmin");
+		o.setCrtUid(cmd.getCrtUid());
+		o.setCrtName(cmd.getCrtName());
 		o.setCrtDate(new Date());
 		o.setCrtTime(new Time(new Date().getTime()));
 
@@ -160,8 +164,8 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 		o.setMacAddress(cmd.getMacAddress());
 
 		// update
-		o.setUpdUid("sysadmin");
-		o.setUpdName("sysadmin");
+		o.setUpdUid(cmd.getUpdUid());
+		o.setUpdName(cmd.getUpdName());
 		o.setUpdDate(new Date());
 		o.setUpdTime(new Time(new Date().getTime()));
 

@@ -10,7 +10,9 @@
 	
 		<intercept-url pattern="/web/user/ssologin" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		<intercept-url pattern="/web/user/initial" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-		<intercept-url pattern="/web/user/redirect" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/web/user/add" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		
+		
 		<intercept-url pattern="/apply.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		<intercept-url pattern="/images/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 		

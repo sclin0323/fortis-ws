@@ -142,6 +142,16 @@ public class UserDeviceCommand {
 	public void setApplicantTime(Time applicantTime) {
 		this.applicantTime = applicantTime;
 	}
+
+
+	@Override
+	public String toString() {
+		return "UserDeviceCommand [deviceName=" + deviceName + ", deviceGroup=" + deviceGroup + ", applicantId="
+				+ applicantId + ", macAddress=" + macAddress + ", crtUid=" + crtUid + ", crtName=" + crtName
+				+ ", crtDate=" + crtDate + ", crtTime=" + crtTime + ", updUid=" + updUid + ", updName=" + updName
+				+ ", updDate=" + updDate + ", updTime=" + updTime + ", applicantName=" + applicantName
+				+ ", applicantDate=" + applicantDate + ", applicantTime=" + applicantTime + "]";
+	}
 	
 	
 	

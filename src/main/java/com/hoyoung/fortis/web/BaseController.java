@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -122,6 +123,14 @@ public abstract class BaseController {
 			return principal.getName();
 		}
 		return null;
+	}
+	
+	// 隨機 選取一個 Device Group
+	protected String getDeviceGroupByRandom() {
+		Random generator = new Random(); 
+		int i = generator.nextInt(10);
+		
+		return "none-auth-group-"+i;
 	}
 	
 }

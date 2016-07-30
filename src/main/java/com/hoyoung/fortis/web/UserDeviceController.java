@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.hoyoung.fortis.authorize.UserInfo;
 import com.hoyoung.fortis.command.UserDeviceCommand;
 import com.hoyoung.fortis.dao.SysSetting;
 import com.hoyoung.fortis.python.PythonResponse;
@@ -52,13 +54,25 @@ public class UserDeviceController extends BaseController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public @ResponseBody ModelAndView add(ModelMap model, @RequestBody UserDeviceCommand cmd) {
+	public @ResponseBody ModelAndView add(ModelMap model, HttpServletRequest request,
+			@RequestBody UserDeviceCommand cmd) {
 
+		// 取得登入帳號 UserInfo
+		UserInfo userInfo = getUserInfo(request);
+		if (userInfo == null) {
+			return getFailureModelAndView(model, "登入帳號資料有誤!!");
+		} else {
+			cmd.setCrtUid(userInfo.getSysUserId());
+			cmd.setCrtName(userInfo.getName());
+		}
+
+		// 驗證新增資料
 		String validateMsg = userDeviceService.validateCreate(cmd);
 		if (validateMsg != null) {
 			return getFailureModelAndView(model, validateMsg);
 		}
 
+		// 新增 Fortinet : User Device and Group
 		try {
 			PythonResponse r1 = restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
 			// 檢查回傳的資料，使否出現網路卡號存在失敗
@@ -66,7 +80,7 @@ public class UserDeviceController extends BaseController {
 				return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
 			}
 			restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName(), cmd.getDeviceGroup());
-			
+
 			restTemplateService.reenableSystemInterface();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,23 +88,34 @@ public class UserDeviceController extends BaseController {
 			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
 		}
 
-		// 新增人員訊息
+		// 新增 User Device
 		Map map = userDeviceService.create(cmd);
 
 		return getSuccessModelAndView(model, map);
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public @ResponseBody ModelAndView update(ModelMap model, @RequestBody UserDeviceCommand cmd) {
-		
+	public @ResponseBody ModelAndView update(ModelMap model, HttpServletRequest request,
+			@RequestBody UserDeviceCommand cmd) {
+		// 取得登入帳號 UserInfo
+		UserInfo userInfo = getUserInfo(request);
+		if (userInfo == null) {
+			return getFailureModelAndView(model, "登入帳號資料有誤!!");
+		} else {
+			cmd.setUpdUid(userInfo.getSysUserId());
+			cmd.setUpdName(userInfo.getName());
+		}
+
 		// 檢查網卡是否有異動，如果沒有異動，直接更新資料。
-		if(userDeviceService.isUpdateMacAddress(cmd) == false) {
+		if (userDeviceService.isUpdateMacAddress(cmd) == false) {
 			// 更新人員訊息
+			cmd.setUpdUid("sysadmin");
+			cmd.setUpdName("sysadmin");
 			Map map = userDeviceService.update(cmd);
 			return getSuccessModelAndView(model, map);
 		}
-		
-		//  網卡異動檢核網卡是否重複。
+
+		// 網卡異動檢核網卡是否重複。
 		String validateMsg = userDeviceService.validateUpdate(cmd);
 		if (validateMsg != null) {
 			return getFailureModelAndView(model, validateMsg);
@@ -112,7 +137,7 @@ public class UserDeviceController extends BaseController {
 		Map map = userDeviceService.update(cmd);
 
 		return getSuccessModelAndView(model, map);
-		
+
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)

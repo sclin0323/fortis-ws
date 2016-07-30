@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>校園無線網路網卡登記系統</title>
-    <link rel="icon" type="image/x-icon" href="nutc.ico">
+    <link rel="icon" type="image/x-icon" href="images/nutc.ico">
     <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
     <!-- Load Bootstrap and JQuery -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
@@ -15,23 +15,173 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
     <script>
     var app = angular.module('ApplyApp', [])
-        .factory('myService', function() {
+        .factory('userService', function() {
             return {
-                getUrlVars: function() {
-                    var vars = {};
-                    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
-                        function(m, key, value) {
-                            vars[key] = value;
-                        });
-                    return vars;
+                addUserDevice: function($scope, $http) {
+                    // Post Add by Ajax
+                    jQuery('#ajaxWaitingModal').modal("show");
+                    $http({
+                        method: 'POST',
+                        url: '/web/user/add',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            crtUid: $scope.applicantId,
+                            crtName: $scope.applicantName,
+                            applicantId: $scope.applicantId,
+                            applicantName: $scope.applicantName,
+                            macAddress: $scope.macAddress.toLowerCase()
+
+                        }
+                    }).then(function successCallback(response) {
+                        // 檢查是否有檢核錯誤
+                        if (response.data.status === 0) {
+                            // 新增一筆資料
+                            $scope.userDevices.push(response.data.data);
+                            // 清除 Form
+                            $scope.macAddress = '';
+                        } else if (response.data.status === -1) {
+                            alert(response.data.message);
+                        } else {
+                            alert(response);
+                        }
+                        // 關閉等待視窗
+                        jQuery('#ajaxWaitingModal').modal("hide");
+
+                    }, function errorCallback(response) {
+                        alert("執行發生錯誤!!");
+                        var myWindow = window.open("", "", "width=600,height=300", false);
+                        myWindow.document.write(JSON.stringify(response.data));
+                        // 關閉等待視窗
+                        jQuery('#ajaxWaitingModal').modal("hide");
+                    });
+                },
+                updateUserDevice: function($scope, $http) {
+                    var deviceName = $scope.userDevices[$scope.updateIndex]['deviceName'];
+                    var deviceGroup = $scope.userDevices[$scope.updateIndex]['deviceGroup'];
+                    // 檢查網卡是否有修改
+                    if ($scope.macAddress.toLowerCase() == $scope.userDevices[$scope.updateIndex]['macAddress']) {
+                        alert('網卡沒有異動，請重新確認!');
+                        return;
+                    }
+
+                    // Post Update by Ajax
+                    jQuery('#ajaxWaitingModal').modal("show");
+                    $http({
+                        method: 'PUT',
+                        url: '/web/user/update',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            deviceGroup: deviceGroup,
+                            updUid: $scope.applicantId,
+                            updName: $scope.applicantName,
+                            deviceName: deviceName,
+                            applicantId: $scope.applicantId,
+                            applicantName: $scope.applicantName,
+                            macAddress: $scope.macAddress.toLowerCase()
+
+                        }
+                    }).then(function successCallback(response) {
+                        // 檢查是否有檢核錯誤
+                        if (response.data.status === 0) {
+                            // 更新資料
+                            $scope.userDevices[$scope.updateIndex] = response.data.data;
+                            // 清除 Form
+                            $scope.macAddress = '';
+                        } else if (response.data.status === -1) {
+                            alert(response.data.message);
+                        } else {
+                            alert(response);
+                        }
+                        // 關閉等待視窗
+                        jQuery('#ajaxWaitingModal').modal("hide");
+
+                    }, function errorCallback(response) {
+                        alert("執行發生錯誤!!");
+                        var myWindow = window.open("", "", "width=600,height=300", false);
+                        myWindow.document.write(JSON.stringify(response.data));
+                        // 關閉等待視窗
+                        jQuery('#ajaxWaitingModal').modal("hide");
+                    });
                 }
             }
         });
 
-    app.controller('ApplyCtrl', function($scope, $http, myService) {
+    app.controller('ApplyCtrl', function($scope, $http, userService) {
 
-        // 取得 URL 的 PARAMETERS
-        console.info(myService.getUrlVars()["loginId"]);
+
+        // Submit 新增 or 修改
+        $scope.submit = function() {
+            // 檢查是否達新增上限
+            if ($scope.userDevices.length >= $scope.deviceLimit) {
+                alert('申請數量已達上限。');
+                return;
+            }
+
+            // 檢查網卡格式
+            var macRegex = new RegExp("^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$");
+            if (!macRegex.test($scope.macAddress)) {
+                alert('網卡格式有問題，請重新確認。');
+                return;
+            }
+
+            if ($scope.addMode == true && $scope.updateMode == false) {
+                userService.addUserDevice($scope, $http);
+            } else if ($scope.addMode == false && $scope.updateMode == true) {
+                userService.updateUserDevice($scope, $http);
+            } else {
+                alert('系統前端網頁異常! 請重新登入!!');
+            }
+
+
+        };
+
+        // Delete UserDevice
+        $scope.deleteUserDevice = function(deleteIndex) {
+            var deviceName = $scope.userDevices[deleteIndex]['deviceName'];
+
+            jQuery('#ajaxWaitingModal').modal("show");
+            $http({
+                method: 'DELETE',
+                url: '/web/user/delete',
+                params: {
+                    'deviceName': deviceName
+                }
+            }).then(function successCallback(response) {
+                console.info(response);
+                // 刪除資料
+                $scope.userDevices.splice(this.deleteIndex, 1);
+
+                // 關閉等待視窗
+                jQuery('#ajaxWaitingModal').modal("hide");
+            }, function errorCallback(response) {
+                alert("執行發生錯誤!!");
+                var myWindow = window.open("", "", "width=600,height=300", false);
+                myWindow.document.write(JSON.stringify(response.data));
+                // 關閉等待視窗
+                jQuery('#ajaxWaitingModal').modal("hide");
+
+            });
+        }
+
+        // 設定為 修改模式
+        $scope.setUpdateMode = function(userDevice, updateIndex) {
+            $scope.addMode = false;
+            $scope.updateMode = true;
+            $scope.updateIndex = updateIndex;
+            $scope.macAddress = userDevice.macAddress;
+        }
+
+        // 設定為 新增模式
+        $scope.setAddMode = function() {
+            $scope.addMode = true;
+            $scope.updateMode = false;
+            $scope.updateIndex = -1;
+            $scope.macAddress = '';
+        }
 
         // 初始化作業
         $http({
@@ -41,7 +191,7 @@
             console.info(response);
             $scope.status = response.data.status;
 
-            if($scope.status == -1) {
+            if ($scope.status == -1) {
                 alert(response.data.message);
                 return;
             }
@@ -52,6 +202,10 @@
             $scope.applicantName = response.data.data.applicantName;
             $scope.applicantTitle = response.data.data.applicantTitle;
 
+            // 預設為 新增模式
+            $scope.addMode = true;
+            $scope.updateMode = false;
+
         }, function errorCallback(response) {
             console.info(response);
 
@@ -59,57 +213,70 @@
 
     });
     </script>
+    <style>
+    .modal-vertical-centered-for-ajax_waiting {
+        transform: translate(0, 200%) !important;
+        -ms-transform: translate(0, 200%) !important;
+        -webkit-transform: translate(0, 200%) !important;
+    }
+    </style>
 </head>
 
 <body ng-controller='ApplyCtrl'>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="form-horizontal well">
+                <div class="form-horizontal well well-sm">
                     <img src="/images/ban.jpg" class="img-fluid center-block" alt="Responsive image">
                 </div>
             </div>
             <div class="col-md-12">
-                <form>
-                    <div class="form-horizontal well">
+                <form ng-submit="submit()">
+                    <div class="form-horizontal well well-sm">
                         <fieldset>
                             <legend>
                                 <h3><p class="text-center">校園無線網路網卡登記系統</p></h3></legend>
-
                             <div class="form-group">
                                 <label class="col-md-2 control-label">帳號 ID</label>
                                 <div class="col-md-4">
                                     <input ng-model="applicantId" class="form-control" type="text" disabled required>
                                 </div>
-
                                 <label class="col-md-2 control-label">申請者姓名</label>
                                 <div class="col-md-4">
                                     <input ng-model="applicantName" class="form-control" type="text" disabled required>
                                 </div>
-                            </div>  
-
+                            </div>
                             <div class="form-group">
                                 <label class="col-md-2 control-label">職稱</label>
                                 <div class="col-md-4">
                                     <input ng-model="applicantTitle" class="form-control" type="text" disabled required>
                                 </div>
-
                                 <label class="col-md-2 control-label">網卡卡號</label>
                                 <div class="col-md-4">
                                     <input ng-model="macAddress" class="form-control" placeholder="00:FF:95:9F:68:16" type="text" required>
-                                    
                                 </div>
-                            </div> 
-
-                            <div class="form-group">
-                                
-                                <div class="col-md-offset-4 col-md-4">
+                            </div>
+                            <!-- add button -->
+                            <div class="form-group" ng-show="addMode">
+                                <div class="col-md-offset-5 col-md-3">
                                     <button type="submit" class="btn btn-primary btn-block" ng-disabled="status != 0">
-                                        <span class="glyphicon glyphicon-saved" aria-hidden="true">新增網卡</span>
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true">新增網卡</span>
                                     </button>
                                     <p class="help-block">每個用戶最多申請 {{deviceLimit}} 個無線網路</p>
                                 </div>
-
+                            </div>
+                            <!-- update button -->
+                            <div class="form-group" ng-show="updateMode">
+                                <div class="col-md-offset-5 col-md-3">
+                                    <button type="submit" class="btn btn-warning btn-block" ng-disabled="status != 0">
+                                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">確認更新</span>
+                                    </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-default btn-block" ng-click="setAddMode()" ng-disabled="status != 0">
+                                        <span class="glyphicon glyphicon-refresh" aria-hidden="true">取消更新</span>
+                                    </button>
+                                </div>
                             </div>
                         </fieldset>
                     </div>
@@ -140,12 +307,12 @@
                             <td>{{userDevice.applicantDate}}</td>
                             <td>{{userDevice.applicantTime}}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-warning ">
+                                <button type="button" class="btn btn-sm btn-warning" ng-click="setUpdateMode(userDevice, $index)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-danger">
+                                <button type="button" class="btn btn-sm btn-danger" ng-click="deleteUserDevice($index)">
                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </button>
                             </td>
@@ -154,6 +321,21 @@
                 </table>
                 <div class="col-md-12 text-center">
                     <div id="page-selection"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Ajax Waiting Modal-->
+    <div class="modal fade" id="ajaxWaitingModal" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-vertical-centered-for-ajax_waiting">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5>Processing.....</h5>
+                </div>
+                <div class="modal-body">
+                    <div id="ajaxWaiting" class="ajaxWaiting">
+                        <img src="images/progressBar.gif">
+                    </div>
                 </div>
             </div>
         </div>
