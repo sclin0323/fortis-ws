@@ -74,9 +74,9 @@ public class UserDeviceController extends BaseController {
 
 		// 新增 Fortinet : User Device and Group
 		try {
-			PythonResponse r1 = restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
+			PythonResponse pr = restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
 			// 檢查回傳的資料，使否出現網路卡號存在失敗
-			if (restTemplateService.validErrorCode(r1, -15) == false) {
+			if (restTemplateService.validErrorCode(pr, -15) == false) {
 				return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
 			}
 			restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName(), cmd.getDeviceGroup());
@@ -133,7 +133,7 @@ public class UserDeviceController extends BaseController {
 			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
 		}
 
-		// 更新人員訊息
+		// 更新資料
 		Map map = userDeviceService.update(cmd);
 
 		return getSuccessModelAndView(model, map);

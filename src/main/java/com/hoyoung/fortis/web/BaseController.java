@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hoyoung.fortis.authorize.UserInfo;
+import com.hoyoung.fortis.python.PythonResponse;
 import com.hoyoung.fortis.services.SysUserService;
 
 public abstract class BaseController {
@@ -115,6 +116,15 @@ public abstract class BaseController {
 		
 		return null;
 		
+	}
+	
+	// Prettify PythonResponse 
+	protected String getPrettifyPythonResponse(PythonResponse body) {
+		String newLine = new String();
+		for(String line : body.getData()){
+			newLine = newLine + line;
+		}
+		return newLine;
 	}
 
 	protected String getLogonId(HttpServletRequest request) {

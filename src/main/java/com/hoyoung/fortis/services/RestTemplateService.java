@@ -8,6 +8,10 @@ public interface RestTemplateService {
 	
 	public PythonResponse reenableSystemInterface();
 	
+	public PythonResponse showUserDeviceGroupByUserDeviceGroup(String deviceGroup);
+	
+	public PythonResponse showUserDeviceByUserDevice(String deviceName);
+	
 	public PythonResponse editConfigUserDevice(String deviceName,String macAddress);
 	
 	public HttpEntity<PythonResponse> appendConfigUserDeviceGroups(String deviceName,String deviceGroup);

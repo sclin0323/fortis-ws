@@ -47,6 +47,48 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	}
 
 	@Override
+	public PythonResponse showUserDeviceGroupByUserDeviceGroup(String deviceGroup) {
+		SysSetting setting = (SysSetting) fortisDAO.findById(SysSetting.class, "SETTING001");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		
+		UriComponentsBuilder builder = UriComponentsBuilder
+				.fromHttpUrl(urlPrefix+"showUserDeviceGroupByUserDeviceGroup/")
+				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
+				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword())
+				.queryParam("groupName", deviceGroup);
+		
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+
+		HttpEntity<PythonResponse> pythonResponse = rt.exchange(builder.build().encode().toUri(), HttpMethod.GET,
+				entity, PythonResponse.class);
+
+		return pythonResponse.getBody();
+	}
+	
+	@Override
+	public PythonResponse showUserDeviceByUserDevice(String deviceName) {
+		SysSetting setting = (SysSetting) fortisDAO.findById(SysSetting.class, "SETTING001");
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		
+		UriComponentsBuilder builder = UriComponentsBuilder
+				.fromHttpUrl(urlPrefix+"showUserDeviceByUserDevice/")
+				.queryParam("ip", setting.getHostname()).queryParam("port", setting.getPort())
+				.queryParam("userName", setting.getLoginName()).queryParam("password", setting.getPassword())
+				.queryParam("deviceName", deviceName);
+		
+		HttpEntity<?> entity = new HttpEntity<>(headers);
+
+		HttpEntity<PythonResponse> pythonResponse = rt.exchange(builder.build().encode().toUri(), HttpMethod.GET,
+				entity, PythonResponse.class);
+
+		return pythonResponse.getBody();
+	}
+	
+	@Override
 	public PythonResponse editConfigUserDevice(String deviceName, String macAddress) {
 
 		SysSetting setting = (SysSetting) fortisDAO.findById(SysSetting.class, "SETTING001");
@@ -177,6 +219,10 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		
 		return true;
 	}
+
+
+
+
 
 	
 
