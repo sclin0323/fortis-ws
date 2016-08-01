@@ -116,7 +116,7 @@
         // Submit 新增 or 修改
         $scope.submit = function() {
             // 檢查是否達新增上限
-            if ($scope.userDevices.length >= $scope.deviceLimit) {
+            if ($scope.addMode == true && $scope.userDevices.length >= $scope.deviceLimit) {
                 alert('申請數量已達上限。');
                 return;
             }
