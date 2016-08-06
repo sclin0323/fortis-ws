@@ -5,7 +5,7 @@
 	<artifactId>fortis-ws</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>fortis-ws Maven Webapp</name>
+	<name>fortis-ws</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -14,7 +14,6 @@
 		<spring-security.version>3.2.5.RELEASE</spring-security.version>
 		<jackson.version>2.5.4</jackson.version>
 		<quartz.version>2.2.2</quartz.version>
-
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
@@ -304,6 +303,7 @@
 
 
 	</dependencies>
+
 	<build>
 		<finalName>fortis-ws</finalName>
 		<plugins>
@@ -330,6 +330,11 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.3.10.v20160621</version>
+				<configuration>
+					<httpConnector>
+						<port>9999</port>
+					</httpConnector>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

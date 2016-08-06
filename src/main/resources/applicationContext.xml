@@ -34,6 +34,7 @@
 				<value>com.hoyoung.fortis.dao.SysSetting</value>
 				<value>com.hoyoung.fortis.dao.SysUser</value>
 				<value>com.hoyoung.fortis.dao.FortinetUserDevice</value>
+				<value>com.hoyoung.fortis.dao.UserDeviceLog</value>
 			</list>
 		</property>
 	</bean>

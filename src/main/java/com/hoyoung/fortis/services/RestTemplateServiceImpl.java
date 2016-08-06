@@ -9,6 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -16,6 +17,7 @@ import com.hoyoung.fortis.dao.FortisDAO;
 import com.hoyoung.fortis.dao.SysSetting;
 import com.hoyoung.fortis.python.PythonResponse;
 
+@Service
 public class RestTemplateServiceImpl implements RestTemplateService {
 	final static Logger log = Logger.getLogger(RestTemplateServiceImpl.class);
 	

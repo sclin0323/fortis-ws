@@ -1,7 +1,6 @@
 package com.hoyoung.fortis.services;
 
 import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,15 +9,17 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.hoyoung.fortis.command.UserDeviceCommand;
-import com.hoyoung.fortis.dao.SysSetting;
-import com.hoyoung.fortis.dao.UserDevice;
-import com.hoyoung.fortis.web.UserDeviceController;
 
+import com.hoyoung.fortis.command.UserDeviceCommand;
+import com.hoyoung.fortis.dao.UserDevice;
+
+@Service
 public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDeviceService {
 	final static Logger log = Logger.getLogger(UserDeviceServiceImpl.class);
-
+	
 	private String searchWordSql;
 
 	public void setSearchWordSql(String searchWordSql) {
@@ -52,10 +53,6 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 				Restrictions.like("macAddress", word), 
 				Restrictions.like("applicantName", word)));
 
-		if (detachedCriteria == null) {
-			return 0;
-		}
-
 		return fortisDAO.fetchCountByCriteria(detachedCriteria);
 	}
 	
@@ -84,8 +81,6 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 		}
 		
 		// 網卡格式是否有錯
-		
-		
 		
 		return null;
 	}
@@ -192,7 +187,6 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 		
 		if (isFull) {
 			m.put("deviceName", o.getDeviceName());
-			
 			m.put("deviceGroup", o.getDeviceGroup());
 			m.put("applicantId", o.getApplicantId());
 			m.put("applicantName", o.getApplicantName());

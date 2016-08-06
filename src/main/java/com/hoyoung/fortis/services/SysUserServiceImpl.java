@@ -9,15 +9,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.stereotype.Service;
 
 import com.hoyoung.fortis.authorize.UserInfo;
-import com.hoyoung.fortis.command.SysSettingCommand;
 import com.hoyoung.fortis.command.SysUserCommand;
-import com.hoyoung.fortis.dao.SysSetting;
 import com.hoyoung.fortis.dao.SysUser;
-import com.hoyoung.fortis.dao.UserDevice;
-import com.hoyoung.fortis.web.UserDeviceController;
 
+@Service
 public class SysUserServiceImpl extends BaseServiceImpl implements SysUserService{
 
 	final static Logger log = Logger.getLogger(SysUserServiceImpl.class);

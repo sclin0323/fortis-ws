@@ -21,6 +21,7 @@
 	<bean id="fortinetUserDeviceService" class="com.hoyoung.fortis.services.FortinetUserDeviceServiceImpl"></bean>
 	<bean id="sysUserService" class="com.hoyoung.fortis.services.SysUserServiceImpl"></bean>
 	<bean id="sysSettingService" class="com.hoyoung.fortis.services.SysSettingServiceImpl"></bean>
+	<bean id="userDeviceLogService" class="com.hoyoung.fortis.services.UserDeviceLogServiceImpl"></bean>
 	<bean id="userDeviceService" class="com.hoyoung.fortis.services.UserDeviceServiceImpl">
 		<property name="searchWordSql">
 			<value>

@@ -2,8 +2,11 @@ package com.hoyoung.fortis.services;
 
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.hoyoung.fortis.dao.FortinetUserDevice;
 
+@Service
 public class FortinetUserDeviceServiceImpl extends BaseServiceImpl implements FortinetUserDeviceService{
 
 	@Override

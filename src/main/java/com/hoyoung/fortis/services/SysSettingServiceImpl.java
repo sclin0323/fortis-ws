@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.hoyoung.fortis.command.SysSettingCommand;
 import com.hoyoung.fortis.dao.SysSetting;
 import com.hoyoung.fortis.dao.UserDevice;
 
+@Service
 public class SysSettingServiceImpl extends BaseServiceImpl implements SysSettingService{
 
 	@Override
