@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ public class UserDeviceLogServiceImpl extends BaseServiceImpl implements UserDev
 				Restrictions.like("deviceGroup", word), 
 				Restrictions.like("logUid", word),
 				Restrictions.like("logName", word)));
+		detachedCriteria.addOrder(Order.desc("logId"));
 
 		List dataList = fortisDAO.findByCriteria(detachedCriteria, start, limit);
 
@@ -102,7 +104,7 @@ public class UserDeviceLogServiceImpl extends BaseServiceImpl implements UserDev
 			m.put("logUid", o.getLogUid());
 			m.put("logName", o.getLogName());
 			m.put("logDate", toDateString(o.getLogDate()));
-			m.put("logTime", toDateString(o.getLogTime()));
+			m.put("logTime", toTimeString(o.getLogTime()));
 			
 			m.put("deviceName", o.getDeviceName());
 			m.put("deviceGroup", o.getDeviceGroup());
