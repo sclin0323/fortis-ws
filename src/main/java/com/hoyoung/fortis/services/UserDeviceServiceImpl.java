@@ -81,8 +81,8 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 		}
 		
 		// UserDevice 只能為英文與數字 (中文也不可)
-		if( !cmd.getDeviceName().matches("[a-zA-Z0-9|\\.]*") ) {
-			throw new IllegalArgumentException("User Device 只能為英文或數字組合，不可有特殊符號或中文。");
+		if( !cmd.getDeviceName().matches("[-a-zA-Z0-9|\\.]*") ) {
+			throw new IllegalArgumentException("User Device 只能為英文或數字組合，不可有特殊符號(空白)或中文。");
 		}
 		
 	}
