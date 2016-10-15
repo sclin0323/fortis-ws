@@ -20,6 +20,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hoyoung.fortis.dao.FortisDAO;
@@ -142,6 +143,14 @@ public abstract class BaseServiceImpl {
 		List dataList = fortisDAO.findAll(getEntityClass());
 		
 		return toMapList(dataList, false);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Map<String, Object>> fetchAll() {
+		
+		List dataList = fortisDAO.findAll(getEntityClass());
+		
+		return toMapList(dataList, true);
 	}
 	
 	@Transactional(readOnly=true)

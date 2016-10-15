@@ -65,9 +65,10 @@ public class UserDeviceController extends BaseController {
 		}
 
 		// 驗證新增資料
-		String validateMsg = userDeviceService.validateCreate(cmd);
-		if (validateMsg != null) {
-			return getFailureModelAndView(model, validateMsg);
+		try {
+			userDeviceService.validateCreate(cmd);
+		} catch(Exception e) {
+			return getFailureModelAndView(model, e.getMessage());
 		}
 
 		// 新增 Fortinet : User Device and Group
@@ -120,10 +121,11 @@ public class UserDeviceController extends BaseController {
 			return getSuccessModelAndView(model, map);
 		}
 
-		// 網卡異動檢核網卡是否重複。
-		String validateMsg = userDeviceService.validateUpdate(cmd);
-		if (validateMsg != null) {
-			return getFailureModelAndView(model, validateMsg);
+		// 驗證 - 網卡異動檢核網卡是否重複。
+		try {
+			userDeviceService.validateUpdate(cmd);
+		} catch(Exception e) {
+			return getFailureModelAndView(model, e.getMessage());
 		}
 
 		try {

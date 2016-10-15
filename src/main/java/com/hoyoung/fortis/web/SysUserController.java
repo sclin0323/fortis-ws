@@ -48,7 +48,15 @@ public class SysUserController extends BaseController {
 		map.put("sysUserName", userInfo.getName());
 		
 		log.info(userInfo.getSysUserId()+" "+userInfo.getName());
-
+		
+		// get sysSetting
+		Map<String, Object> m = sysSettingService.fetchById("SETTING001");
+		if(m != null) {
+			map.put("enableGuest", m.get("enableGuest"));
+			map.put("enableUserDevice", m.get("enableUserDevice"));
+		}
+		
+		
 		return getSuccessModelAndView(model, map);
 	}
 

@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hoyoung.fortis.authorize.UserInfo;
 import com.hoyoung.fortis.python.PythonResponse;
+import com.hoyoung.fortis.services.SysSettingService;
 import com.hoyoung.fortis.services.SysUserService;
 
 public abstract class BaseController {
@@ -45,6 +46,9 @@ public abstract class BaseController {
 	
 	@Autowired
 	protected SysUserService sysUserService;
+	
+	@Autowired
+	protected SysSettingService sysSettingService;
 	
 	@InitBinder
     public void initBinder(WebDataBinder binder) {

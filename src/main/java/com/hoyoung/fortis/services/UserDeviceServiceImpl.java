@@ -65,24 +65,26 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 	}
 
 	@Override
-	public String validateCreate(Object obj) {
+	public void validateCreate(Object obj) {
 		UserDeviceCommand cmd = (UserDeviceCommand) obj;
 		
 		// DeviceName 是否已經存在
 		UserDevice o = (UserDevice) fortisDAO.findById(getEntityClass(), cmd.getDeviceName());
 		if (o != null) {
-			return "該 Device Name 已經存在!!";
+			throw new IllegalArgumentException("該 Device Name 已經存在!!");
 		}
 		
 		// 網卡是否已經存在
 		List lists = fortisDAO.findByProperty(getEntityClass(), "macAddress", cmd.getMacAddress());
 		if(lists.size() >0) {
-			return "該 Mac Address 已經存在!!";
+			throw new IllegalArgumentException("該 Mac Address 已經存在!!");
 		}
 		
-		// 網卡格式是否有錯
+		// UserDevice 只能為英文與數字 (中文也不可)
+		if( !cmd.getDeviceName().matches("[a-zA-Z0-9|\\.]*") ) {
+			throw new IllegalArgumentException("User Device 只能為英文或數字組合，不可有特殊符號或中文。");
+		}
 		
-		return null;
 	}
 
 	@Override
@@ -108,16 +110,14 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 	}
 	
 	@Override
-	public String validateUpdate(Object obj) {
+	public void validateUpdate(Object obj) {
 		UserDeviceCommand cmd = (UserDeviceCommand) obj;
 		
 		// 檢核網卡是否已經存在
 		List<UserDevice> list = fortisDAO.findByProperty(getEntityClass(), "macAddress", cmd.getMacAddress());
 		if(list.size() >0) {
-					return "該網卡卡號 (mac address) 已經存在!!";
+					throw new IllegalArgumentException("該網卡卡號 (mac address) 已經存在!!");
 		}
-		
-		return null;
 	}
 	
 	@Override

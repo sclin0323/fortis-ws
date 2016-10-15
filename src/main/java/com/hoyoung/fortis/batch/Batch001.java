@@ -6,11 +6,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.Gson;
-import com.hoyoung.fortis.command.FortinetUserDeviceCommand;
+import com.hoyoung.fortis.command.UserDeviceSyncCommand;
 import com.hoyoung.fortis.python.PythonResponse;
-import com.hoyoung.fortis.services.FortinetUserDeviceService;
 import com.hoyoung.fortis.services.RestTemplateService;
+import com.hoyoung.fortis.services.UserDeviceSyncService;
 
 @Component
 public class Batch001 extends BaseBatch implements Batch{
@@ -18,10 +17,10 @@ public class Batch001 extends BaseBatch implements Batch{
 	final static Logger log = Logger.getLogger(Batch001.class);
 
 	@Autowired
-	RestTemplateService restTemplateService;
+	private RestTemplateService restTemplateService;
 	
 	@Autowired
-	FortinetUserDeviceService fortinetUserDeviceService;
+	private UserDeviceSyncService userDeviceSyncService;
 	
 	ArrayList<String> groups = new ArrayList<String>();
 	
@@ -41,7 +40,9 @@ public class Batch001 extends BaseBatch implements Batch{
 	public void execute() {
 		log.info("==================================================");
 		
-		ArrayList<FortinetUserDeviceCommand> commands = new ArrayList<FortinetUserDeviceCommand>();
+		
+		/*
+		ArrayList<UserDeviceSyncCommand> commands = new ArrayList<UserDeviceSyncCommand>();
 
 		for(String userDeviceGroup : groups) {
 			PythonResponse userDeviceGroupRes = restTemplateService.showUserDeviceGroupByUserDeviceGroup(userDeviceGroup);
@@ -50,7 +51,7 @@ public class Batch001 extends BaseBatch implements Batch{
 				// 取得 Fortinet User Devices 
 				for(String line : userDeviceGroupRes.getData()) {
 					if(line.contains("set member") == true) {
-						ArrayList<FortinetUserDeviceCommand> tmps = createFortinetUserDeviceCommand(line, userDeviceGroup);
+						ArrayList<UserDeviceSyncCommand> tmps = createFortinetUserDeviceCommand(line, userDeviceGroup);
 						commands.addAll(tmps);
 					}
 				}
@@ -63,7 +64,7 @@ public class Batch001 extends BaseBatch implements Batch{
 		}
 		
 		// 取得 Fortinet Mac Address
-		for(FortinetUserDeviceCommand command : commands){
+		for(UserDeviceSyncCommand command : commands){
 			PythonResponse userDeviceRes = restTemplateService.showUserDeviceByUserDevice(command.getUserDevice());
 			
 			for(String line : userDeviceRes.getData()) {
@@ -72,24 +73,23 @@ public class Batch001 extends BaseBatch implements Batch{
 					command.setMacAddress(macAddress);
 				}
 			}
-			
 		}
 		
 		// testing
-		for(FortinetUserDeviceCommand cmd : commands){
+		for(UserDeviceSyncCommand cmd : commands){
 			log.info(cmd.getUserDevice() +" "+cmd.getUserDeviceGroup()+" "+cmd.getMacAddress());
 		}
 		
-		
+		*/
 		
 	}
 
-	private ArrayList<FortinetUserDeviceCommand> createFortinetUserDeviceCommand(String line, String userDeviceGroup) {
+	private ArrayList<UserDeviceSyncCommand> createFortinetUserDeviceCommand(String line, String userDeviceGroup) {
 		
-		ArrayList<FortinetUserDeviceCommand> cmds = new ArrayList<FortinetUserDeviceCommand>();
+		ArrayList<UserDeviceSyncCommand> cmds = new ArrayList<UserDeviceSyncCommand>();
 		
 		for(String userDevice :  line.trim().replaceAll("set member", "").trim().replaceAll("\"", "").trim().split(" ")) {
-			FortinetUserDeviceCommand cmd = new FortinetUserDeviceCommand();
+			UserDeviceSyncCommand cmd = new UserDeviceSyncCommand();
 			
 			cmd.setUserDevice(userDevice);
 			cmd.setUserDeviceGroup(userDeviceGroup);

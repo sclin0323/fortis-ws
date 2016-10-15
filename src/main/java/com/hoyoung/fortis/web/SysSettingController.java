@@ -1,5 +1,7 @@
 package com.hoyoung.fortis.web;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,8 +80,16 @@ public class SysSettingController extends BaseController {
 		cmd.setLoginName("admin");
 		cmd.setPassword("password");
 		cmd.setDeviceLimit(0);
+		
+		cmd.setGuestLimit(0);
+		cmd.setGuestStart(Time.valueOf(LocalTime.of(7, 0)));
+		cmd.setGuestEnd(Time.valueOf(LocalTime.of(19, 0)));
+		
 		cmd.setCrtUid("sysadmin");
 		cmd.setCrtName("sysadmin");
+		
+		cmd.setEnableGuest(true);
+		cmd.setEnableUserDevice(true);
 
 		Map map = sysSettingService.create(cmd);
 
@@ -89,6 +99,10 @@ public class SysSettingController extends BaseController {
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public @ResponseBody ModelAndView update(ModelMap model, @RequestBody SysSettingCommand cmd) {
 
+		log.info(cmd.getGuestLimit());
+		log.info(cmd.getGuestStart());
+		log.info(cmd.getGuestEnd());
+		
 		Map map = sysSettingService.update(cmd);
 
 		return getSuccessModelAndView(model, map);

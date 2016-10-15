@@ -65,7 +65,7 @@ public class UserDeviceLogServiceImpl extends BaseServiceImpl implements UserDev
 		
 		// 建立 Log Id
 		LocalDateTime date = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddmmss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddhhmmssSSS");
 		String logId = date.format(formatter);
 		
 		UserDeviceLog o = new UserDeviceLog();

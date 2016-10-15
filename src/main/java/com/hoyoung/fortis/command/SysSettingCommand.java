@@ -13,6 +13,10 @@ public class SysSettingCommand {
 	private String password;
 	private Integer deviceLimit;
 	
+	private Integer guestLimit;
+	private Time guestStart;
+	private Time guestEnd;
+	
 	private String crtUid;
 	private String crtName;
 	private Date crtDate;
@@ -21,6 +25,66 @@ public class SysSettingCommand {
 	private String updName;
 	private Date updDate;
 	private Time updTime;
+	
+	private Boolean enableGuest;
+	private Boolean enableUserDevice;
+	
+	
+	
+	public Boolean getEnableGuest() {
+		return enableGuest;
+	}
+	
+
+
+	public void setEnableGuest(Boolean enableGuest) {
+		this.enableGuest = enableGuest;
+	}
+	
+
+
+	public Boolean getEnableUserDevice() {
+		return enableUserDevice;
+	}
+	
+
+
+	public void setEnableUserDevice(Boolean enableUserDevice) {
+		this.enableUserDevice = enableUserDevice;
+	}
+	
+
+
+	public Integer getGuestLimit() {
+		return guestLimit;
+	}
+	
+
+	public void setGuestLimit(Integer guestLimit) {
+		this.guestLimit = guestLimit;
+	}
+	
+
+	public Time getGuestStart() {
+		return guestStart;
+	}
+	
+
+	public void setGuestStart(Time guestStart) {
+		this.guestStart = guestStart;
+	}
+	
+
+	public Time getGuestEnd() {
+		return guestEnd;
+	}
+	
+
+	public void setGuestEnd(Time guestEnd) {
+		this.guestEnd = guestEnd;
+	}
+	
+
 	public String getSysSettingId() {
 		return sysSettingId;
 	}
