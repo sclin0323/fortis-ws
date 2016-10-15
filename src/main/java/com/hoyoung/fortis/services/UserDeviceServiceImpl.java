@@ -85,6 +85,11 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 			throw new IllegalArgumentException("User Device 只能為英文或數字組合，不可有特殊符號(空白)或中文。");
 		}
 		
+		// Applicant ID 只能為英文與數字 (中文也不可)
+		if( !cmd.getApplicantId().matches("[-a-zA-Z0-9|\\.]*") ) {
+			throw new IllegalArgumentException("申請者Id 只能為英文或數字組合，不可有特殊符號(空白)或中文。");
+		}
+		
 	}
 
 	@Override
@@ -113,10 +118,20 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 	public void validateUpdate(Object obj) {
 		UserDeviceCommand cmd = (UserDeviceCommand) obj;
 		
-		// 檢核網卡是否已經存在
+		// 檢核網卡是否已經存在，而且非自己
 		List<UserDevice> list = fortisDAO.findByProperty(getEntityClass(), "macAddress", cmd.getMacAddress());
 		if(list.size() >0) {
-					throw new IllegalArgumentException("該網卡卡號 (mac address) 已經存在!!");
+			for(UserDevice userDevice : list) {
+				if(!(cmd.getDeviceName()).equals(userDevice.getDeviceName())) {
+					throw new IllegalArgumentException("該網卡卡號 (mac address) 已經存在!! "+userDevice.getDeviceName());
+				}
+			}	
+		}
+				
+		// Applicant ID 只能為英文與數字 (中文也不可)
+		log.info("--------> "+cmd.getApplicantId());
+		if( !cmd.getApplicantId().matches("[-a-zA-Z0-9|\\.]*") ) {
+			throw new IllegalArgumentException("申請者Id 只能為英文或數字組合，不可有特殊符號(空白)或中文。");
 		}
 	}
 	

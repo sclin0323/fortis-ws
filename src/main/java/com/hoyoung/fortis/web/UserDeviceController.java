@@ -67,7 +67,7 @@ public class UserDeviceController extends BaseController {
 		// 驗證新增資料
 		try {
 			userDeviceService.validateCreate(cmd);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return getFailureModelAndView(model, e.getMessage());
 		}
 
@@ -108,6 +108,13 @@ public class UserDeviceController extends BaseController {
 			cmd.setUpdName(userInfo.getName());
 		}
 
+		// 驗證 - 網卡異動檢核網卡是否重複。
+		try {
+			userDeviceService.validateUpdate(cmd);
+		} catch (Exception e) {
+			return getFailureModelAndView(model, e.getMessage());
+		}
+
 		// 檢查網卡是否有異動，如果沒有異動，直接更新資料。
 		if (userDeviceService.isUpdateMacAddress(cmd) == false) {
 			// 更新人員訊息
@@ -119,13 +126,6 @@ public class UserDeviceController extends BaseController {
 			userDeviceLogService.saveUserDeviceLog("UPDATE", cmd.getCrtUid(), cmd.getCrtName(), cmd.getDeviceName());
 
 			return getSuccessModelAndView(model, map);
-		}
-
-		// 驗證 - 網卡異動檢核網卡是否重複。
-		try {
-			userDeviceService.validateUpdate(cmd);
-		} catch(Exception e) {
-			return getFailureModelAndView(model, e.getMessage());
 		}
 
 		try {

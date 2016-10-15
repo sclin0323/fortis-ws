@@ -11,10 +11,10 @@ public class TestMatch {
 		
 		System.out.println("abc-123".matches("[-a-zA-Z0-9|\\.]*"));
 		
-		System.out.println("abc -123".matches("[-a-zA-Z0-9|\\.]*"));
+		System.out.println("電算工讀生1".matches("[-a-zA-Z0-9|\\.]*"));
 		
-		System.out.println("AAA-123".matches("[-a-zA-Z0-9|\\.]*"));
-		System.out.println("AAA-123中文".matches("[-a-zA-Z0-9|\\.]*"));
+		//System.out.println("AAA-123".matches("[-a-zA-Z0-9|\\.]*"));
+		//System.out.println("AAA-123中文".matches("[-a-zA-Z0-9|\\.]*"));
 		
 		/*
 		System.out.println("abc-def".matches("^[a-z\\-]+$"));
