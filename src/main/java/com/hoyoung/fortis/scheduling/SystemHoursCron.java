@@ -18,7 +18,7 @@ public class SystemHoursCron {
 	@Autowired
 	Batch003 batch003;
 	
-	@Scheduled(cron="0 */1 * * * ?")
+	@Scheduled(cron="0 0 */1 * * ?")
     public void demoServiceMethod() throws Exception {
 		batch003.execute();
     }
