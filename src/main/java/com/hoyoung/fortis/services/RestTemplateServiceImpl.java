@@ -291,12 +291,69 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		return true;
 	}
 
-	
+	@Override
+	public String getConfigUserDeviceSetMac(String deviceName, String macAddress) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public String getConfigUserDeviceGroupAppendMember(String deviceGroup, String deviceName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public String getConfigUserDeviceGroupUnselectMember(String deviceGroup, String deviceName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public String getConfigUserDeviceDelete(String deviceName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public String getConfigSystemInterfaceDeviceIdentification() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	
+	@Override
+	public String getConfigUserLocalSetPassword(String userName, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
+	public String getConfigUserGroupAppendMember(String userGroup, String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getConfigUserGroupUnselectMember(String userGroup, String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getConfigUserLocalDelete(String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getShowUserDevice(String deviceName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getShowUserDeviceGroup(String deviceGroup) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

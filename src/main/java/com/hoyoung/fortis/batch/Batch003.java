@@ -67,6 +67,14 @@ public class Batch003 extends BaseBatch implements Batch{
 			
 			String[] employeeIds = responseEntity.getBody();
 			
+			// 取回的 employeeIds 要很小心處理，否則可能會造成資料被無故清除
+			log.info(employeeIds.length);
+			if(employeeIds.length < 3000) {
+				// 在職清單可能有問題，暫時不清資料
+				log.info("在職清單取得可以有異常: "+employeeIds.toString());
+				return; 
+			}
+			
 			List<Map<String, Object>> maps = userDeviceService.fetchAll();
 			
 			for(Map<String, Object> map : maps) {
@@ -81,9 +89,9 @@ public class Batch003 extends BaseBatch implements Batch{
 					String deviceGroup = (String) map.get("deviceGroup");
 
 					try {
-						//restTemplateService.unselectConfigUserDeviceGroups(deviceName, deviceGroup);
-						//restTemplateService.deleteConfigUserDevice(deviceName);
-						//restTemplateService.reenableSystemInterface();
+						restTemplateService.unselectConfigUserDeviceGroups(deviceName, deviceGroup);
+						restTemplateService.deleteConfigUserDevice(deviceName);
+						restTemplateService.reenableSystemInterface();
 					} catch (Exception e) {
 						e.printStackTrace();
 						log.error("連線設備執行指令失敗!! ", e);
@@ -93,7 +101,7 @@ public class Batch003 extends BaseBatch implements Batch{
 					// 紀錄 Log
 					userDeviceLogService.saveUserDeviceLog("DELETE", "BATCH003", "離職自動化", deviceName);
 
-					//Map map = userDeviceService.delete(deviceName);
+					userDeviceService.delete(deviceName);
 					
 					
 					

@@ -12,14 +12,16 @@ import com.hoyoung.fortis.batch.Batch002;
 import com.hoyoung.fortis.batch.Batch003;
 
 
-public class SystemHoursCron {
-	private static final Log log = LogFactory.getLog(SystemHoursCron.class);
+public class Batch003Cron {
+	private static final Log log = LogFactory.getLog(Batch003Cron.class);
 	
 	@Autowired
 	Batch003 batch003;
 	
-	@Scheduled(cron="0 0 */1 * * ?")
+	
+	//@Scheduled(cron="*/30 * * * * ?")  // 每30秒執行一次
+	@Scheduled(cron="0 0 1 */1 * ?")		// 每天凌晨一點執行一次
     public void demoServiceMethod() throws Exception {
-		//batch003.execute();
+		batch003.execute();
     }
 }
