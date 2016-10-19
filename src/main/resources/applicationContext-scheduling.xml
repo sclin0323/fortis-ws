@@ -16,22 +16,22 @@
 	http://www.springframework.org/schema/security
    http://www.springframework.org/schema/security/spring-security-3.2.xsd">
    
-   <!-- Send Email Google
+   
 	<bean id="MailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" />
-		<property name="username" value="ncut.dialup@gmail.com" />
-		<property name="password" value="!qaz2wsx" />
+		<property name="username" value="sclin0323@gmail.com" />
+		<property name="password" value="linshangchun" />
  
 		<property name="javaMailProperties">
 			<props>
-           		<prop key="mail.smtp.auth">true</prop>
-           		<prop key="mail.smtp.starttls.enable">true</prop>
+           		<prop key="mail.smtp.auth">false</prop>
+           		<prop key="mail.smtp.starttls.enable">false</prop>
            		<prop key="mail.debug">true</prop>
        		</props>
 		</property>
 	</bean>
-	-->
+	<!--
 	<bean id="MailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="spam.ncut.edu.tw" />
 		<property name="port" value="25" />
@@ -46,6 +46,7 @@
        		</props>
 		</property>
 	</bean>
+	-->
 	
 
 	<task:annotation-driven />
