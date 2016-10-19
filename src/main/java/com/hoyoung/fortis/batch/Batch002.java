@@ -2,6 +2,7 @@ package com.hoyoung.fortis.batch;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Component;
 
 import com.hoyoung.fortis.services.GuestService;
@@ -19,22 +20,15 @@ public class Batch002 extends BaseBatch implements Batch{
 	@Autowired
 	private GuestService guestService;
 	
+	@Autowired
+	private MailSender mailSender;;
+	
 	public Batch002() {
 		
 	}
 	
 	public void execute() {
-		//log.info("== Batch2 ==");
-		/*
-		List<GuestAppoint> dataList = guestAppointService.fetchByStatusAndStartDate(GuestAppointServiceImpl.STATUS_PREPARE, new Date());
 		
-		log.info(dataList.size());
-		for(GuestAppoint guestAppoint: dataList) {
-			log.info(guestAppoint.getApplicantId());
-		}
-		*/
-		
-		//log.info("==================");
 		
 	}
 

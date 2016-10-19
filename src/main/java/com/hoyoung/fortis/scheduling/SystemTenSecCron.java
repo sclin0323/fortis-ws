@@ -32,12 +32,12 @@ public class SystemTenSecCron {
     public void demoServiceMethod() throws Exception
     {
 		
-		//SimpleMailMessage message = new SimpleMailMessage();
+		SimpleMailMessage message = new SimpleMailMessage();
 		
-		//message.setTo("sclin0323@gmail.com");
-		//message.setSubject("hello....");
-		//message.setText("hihi");
-		//mailSender.send(message);
+		message.setTo("sclin0323@gmail.com");
+		message.setSubject("hello....");
+		message.setText("hihi");
+		mailSender.send(message);
 		
 		//batch003.execute();
 
