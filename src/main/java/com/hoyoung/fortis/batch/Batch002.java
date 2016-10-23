@@ -21,7 +21,7 @@ public class Batch002 extends BaseBatch implements Batch{
 	private GuestService guestService;
 	
 	@Autowired
-	private MailSender mailSender;;
+	private MailSender mailSender;
 	
 	public Batch002() {
 		

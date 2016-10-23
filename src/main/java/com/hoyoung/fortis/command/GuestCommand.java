@@ -6,7 +6,6 @@ import java.util.Date;
 public class GuestCommand {
 	
 	private String guestId;
-	private String guestGroup;
 	private String guestPwd;
 	private String crtUid;
 	private String crtName;
@@ -20,9 +19,43 @@ public class GuestCommand {
 	private String applicantId;
 	private String applicantName;
 	private Date endDate;
+	private String guestGroup;
+	private Date applicantDate;
+	private Time applicantTime;
 	
 	
 	
+	
+
+
+
+	
+
+
+	public Date getApplicantDate() {
+		return applicantDate;
+	}
+	
+
+
+	public void setApplicantDate(Date applicantDate) {
+		this.applicantDate = applicantDate;
+	}
+	
+
+
+	public Time getApplicantTime() {
+		return applicantTime;
+	}
+	
+
+
+	public void setApplicantTime(Time applicantTime) {
+		this.applicantTime = applicantTime;
+	}
+	
+
+
 	public Date getEndDate() {
 		return endDate;
 	}

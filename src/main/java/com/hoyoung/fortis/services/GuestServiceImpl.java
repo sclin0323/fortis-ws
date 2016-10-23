@@ -88,12 +88,16 @@ public class GuestServiceImpl extends BaseServiceImpl implements GuestService {
 		
 		Guest o = new Guest();
 		
+		log.info(cmd.getGuestId());
+		
 		o.setGuestId(cmd.getGuestId());
 		o.setGuestGroup(cmd.getGuestGroup());
 		o.setGuestPwd(cmd.getGuestPwd());
 
 		o.setApplicantId(cmd.getApplicantId());
 		o.setApplicantName(cmd.getApplicantName());
+		o.setApplicantDate(new Date());
+		o.setApplicantTime(new Time(new Date().getTime()));
 		
 		o.setEmail(cmd.getEmail());
 		o.setEndDate(cmd.getEndDate());

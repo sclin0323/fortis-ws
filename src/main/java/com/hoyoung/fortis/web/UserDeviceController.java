@@ -170,7 +170,7 @@ public class UserDeviceController extends BaseController {
 			log.error("連線設備執行指令失敗!! ", e);
 			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
 		}
-
+		
 		// 紀錄 Log
 		userDeviceLogService.saveUserDeviceLog("DELETE", userInfo.getSysUserId(), userInfo.getName(), deviceName);
 

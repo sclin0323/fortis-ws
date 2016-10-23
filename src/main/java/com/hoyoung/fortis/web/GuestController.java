@@ -23,6 +23,7 @@ import com.hoyoung.fortis.command.GuestCommand;
 import com.hoyoung.fortis.command.SysEmailCommand;
 import com.hoyoung.fortis.dao.SysEmail;
 import com.hoyoung.fortis.python.PythonResponse;
+import com.hoyoung.fortis.services.GuestLogService;
 import com.hoyoung.fortis.services.GuestService;
 import com.hoyoung.fortis.services.RestTemplateService;
 import com.hoyoung.fortis.services.SysEmailService;
@@ -37,6 +38,9 @@ public class GuestController extends BaseController {
 
 	@Autowired
 	private GuestService guestService;
+	
+	@Autowired
+	private GuestLogService guestLogService;
 
 	@Autowired
 	private RestTemplateService restTemplateService;
@@ -105,34 +109,17 @@ public class GuestController extends BaseController {
 			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
 		}
 		
+		// 發送 Email
+		SysEmailCommand sysEmailCommand = guestService.getSysEmailCommand(cmd);
+		sysEmailService.sendEmail(sysEmailCommand.getSendTo(), sysEmailCommand.getSubject(), sysEmailCommand.getText());
 		
-
 		// 新增 Guest Appoint
 		Map map = guestService.create(cmd);
 		
-		// 新增 發送 Email
-		sysEmailService.create(guestService.getSysEmailCommand(cmd));
-
+		// 紀錄 Log
+		guestLogService.saveGuestLog("CREATE", cmd.getCrtUid(), cmd.getCrtName(), cmd.getGuestId());
+		
 		return getSuccessModelAndView(model, map);
-	}
-
-	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public @ResponseBody ModelAndView update(ModelMap model, HttpServletRequest request,
-			@RequestBody GuestCommand cmd) {
-		// 取得登入帳號 UserInfo
-		UserInfo userInfo = getUserInfo(request);
-		if (userInfo == null) {
-			return getFailureModelAndView(model, "登入帳號資料有誤!!");
-		} else {
-			cmd.setUpdUid(userInfo.getSysUserId());
-			cmd.setUpdName(userInfo.getName());
-		}
-
-		// 更新資料
-		Map map = guestService.update(cmd);
-
-		return getSuccessModelAndView(model, map);
-
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
@@ -156,7 +143,12 @@ public class GuestController extends BaseController {
 			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
 		}
 
+		// 紀錄 Log
+		guestLogService.saveGuestLog("DELETE", userInfo.getSysUserId(), userInfo.getName(), guestId);
+				
 		Map map = guestService.delete(guestId);
+		
+		
 
 		return getSuccessModelAndView(model, map);
 	}

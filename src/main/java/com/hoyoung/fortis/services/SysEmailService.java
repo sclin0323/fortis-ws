@@ -7,4 +7,5 @@ import com.hoyoung.fortis.authorize.UserInfo;
 
 public interface SysEmailService extends BaseService{
 
+	public boolean sendEmail(String email, String title, String message);
 }

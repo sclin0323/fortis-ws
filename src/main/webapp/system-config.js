@@ -29,6 +29,7 @@ var barrels = [
     'app/routes/+user-device-log',
     'app/routes/+sys-setting',
     'app/routes/+guest',
+    'app/routes/+guest-log',
 ];
 var cliSystemConfigPackages = {};
 barrels.forEach(function (barrelName) {
