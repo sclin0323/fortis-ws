@@ -178,7 +178,22 @@ public class GuestServiceImpl extends BaseServiceImpl implements GuestService {
 		sysEmailCommand.setSendTo(cmd.getEmail());
 		sysEmailCommand.setSubject("無線網路臨時帳號密碼通知信");
 		
-		String text = "帳號: "+cmd.getGuestId()+" 密碼: "+cmd.getGuestPwd();
+		String text = ""
+				+ "<html><body>"
+				+ "<h1>您的無線網路臨時帳密如下：</h1>"
+				+ "<table style='border -color: #666;' cellpadding=10'>"
+				+ "<tr style='background: #eee;'>"
+				+ "<td><strong> 帳號 :</strong></td>"
+				+ "<td>"+cmd.getGuestId()+"</td>"
+				+ "</tr>"
+				+ "<tr>"
+				+ "<td><strong> 密碼 :</strong></td>"
+				+ "<td>"+cmd.getGuestPwd()+"</td>"
+				+ "</tr>"
+				+ "</table>"
+				+ "</body></html>";
+		
+		//String text = "帳號: "+cmd.getGuestId()+" 密碼: "+cmd.getGuestPwd();
 		sysEmailCommand.setText(text);
 		
 		return sysEmailCommand;

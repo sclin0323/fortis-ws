@@ -23,10 +23,7 @@ public class SysEmailServiceImpl extends BaseServiceImpl implements SysEmailServ
 
 	final static Logger log = Logger.getLogger(SysEmailServiceImpl.class);
 	
-	public static final int STATUS_WAITING = 0;
-	public static final int STATUS_SUCCESS = 1;
-	public static final int STATUS_FAILURE = 9;
-	
+	/*
 	@Override
 	public Map<String, Object> create(Object obj) {
 		SysEmailCommand cmd = (SysEmailCommand) obj;
@@ -44,7 +41,9 @@ public class SysEmailServiceImpl extends BaseServiceImpl implements SysEmailServ
 
 		return toMap(o, true);
 	}
+	*/
 
+	/*
 	@Override
 	public void validateUpdate(Object obj) {
 		
@@ -61,7 +60,9 @@ public class SysEmailServiceImpl extends BaseServiceImpl implements SysEmailServ
 	public Map<String, Object> delete(Object obj) {		
 		return null;
 	}
+	*/
 
+	/*
 	@Override
 	protected Map<String, Object> toMap(Object obj, boolean isFull) {
 		SysEmail o = (SysEmail) obj;
@@ -91,6 +92,7 @@ public class SysEmailServiceImpl extends BaseServiceImpl implements SysEmailServ
 	public void validateCreate(Object obj) {
 		
 	}
+	*/
 
 	@Override
 	public boolean sendEmail(String recipient, String subject, String message) {
@@ -136,6 +138,18 @@ public class SysEmailServiceImpl extends BaseServiceImpl implements SysEmailServ
 		
 		return true;
 		
+	}
+
+	@Override
+	protected Map<String, Object> toMap(Object obj, boolean isFull) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected Class getEntityClass() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

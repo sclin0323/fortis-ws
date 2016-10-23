@@ -25,6 +25,8 @@ public class SystemHoursCron {
 	@Scheduled(cron="*/30 * * * * ?")
     public void demoServiceMethod() throws Exception {
 		
+		/*
+		
 		String recipients[] = {"sclin0323@gmail.com"};
 		String from = "dialup@ncut.edu.tw";
 		
@@ -59,5 +61,7 @@ public class SystemHoursCron {
 	    msg.setSubject(subject);
 	    msg.setContent(message, "text/plain");
 	    Transport.send(msg);
+	    
+	    */
     }
 }
