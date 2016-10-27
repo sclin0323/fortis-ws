@@ -77,9 +77,6 @@ public class GuestController extends BaseController {
 		String guestId = date.format(formatter);
 		cmd.setGuestId(cmd.getApplicantId()+"-"+guestId);
 		cmd.setGuestPwd(guestId);
-		
-		// testing
-		cmd.setGuestGroup("test2");
 
 		// 驗證新增資料
 		try {
@@ -121,9 +118,6 @@ public class GuestController extends BaseController {
 
 		String guestId = request.getParameter("guestId");
 		String guestGroup = request.getParameter("guestGroup");
-		
-		guestGroup = "test2"; // testing
-		
 		
 		try {
 			restTemplateService.unselectConfigUserGroups(guestId, guestGroup);
