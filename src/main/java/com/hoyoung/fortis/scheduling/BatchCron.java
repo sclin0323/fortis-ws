@@ -28,13 +28,12 @@ public class BatchCron {
 	@Autowired
 	SysSettingService sysSettingService;
 
-	@Scheduled(cron="*/30 * * * * ?")
-	//@Scheduled(cron="0 5 0 */1 * ?")		// 每天凌晨0點5分執行一次
+	//@Scheduled(cron="*/30 * * * * ?")
+	@Scheduled(cron="0 5 0 */1 * ?")		// 每天凌晨0點5分執行一次
     public void demoServiceMethod() throws Exception {
 		
 		Map map = sysSettingService.fetchById("SETTING001");
 		boolean  enableUserDevice = (boolean) map.get("enableUserDevice");
-		
 		boolean  enableGuest = (boolean) map.get("enableGuest");
 		
 		if(enableUserDevice) {
@@ -45,7 +44,7 @@ public class BatchCron {
 			batch002.execute();
 		}
 		
-		batch004.execute();
+		//batch004.execute();
 		
     }
 }
