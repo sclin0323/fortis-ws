@@ -53,10 +53,14 @@
 
 	<context:component-scan base-package="com.hoyoung.fortis.batch" />
 
-	 <bean id="demoTenSecCron" class="com.hoyoung.fortis.scheduling.SystemTenSecCron"></bean>
+	<!--  
+	 <bean id="systemTenSecCron" class="com.hoyoung.fortis.scheduling.SystemTenSecCron"></bean>
+	 
 	 
 	 <bean id="systemHoursCron" class="com.hoyoung.fortis.scheduling.SystemHoursCron"></bean>
+	 -->
 	 
-	 <bean id="batch003Cron" class="com.hoyoung.fortis.scheduling.Batch003Cron"></bean>
+	 <bean id="batchCron" class="com.hoyoung.fortis.scheduling.BatchCron"></bean>
+	  
 
 </beans>

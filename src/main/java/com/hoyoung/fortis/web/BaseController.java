@@ -56,6 +56,12 @@ public abstract class BaseController {
 	}
 	
 	// 回傳成功
+	protected ModelAndView getSuccessModelAndView(ModelMap model) {
+		model.put("status", STATUS_SUCCESS);
+		ModelAndView mav = new ModelAndView("jsonView", model);
+		return mav;
+	}
+
 	protected ModelAndView getSuccessModelAndView(ModelMap model, Map map) {
 		
 		model.put("data", map);

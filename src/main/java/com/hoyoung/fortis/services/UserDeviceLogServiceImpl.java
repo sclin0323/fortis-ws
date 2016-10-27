@@ -35,7 +35,8 @@ public class UserDeviceLogServiceImpl extends BaseServiceImpl implements UserDev
 				Restrictions.like("deviceGroup", word), 
 				Restrictions.like("logUid", word),
 				Restrictions.like("logName", word)));
-		detachedCriteria.addOrder(Order.desc("logId"));
+		detachedCriteria.addOrder(Order.desc("logDate"));
+		detachedCriteria.addOrder(Order.desc("logTime"));
 
 		List dataList = fortisDAO.findByCriteria(detachedCriteria, start, limit);
 

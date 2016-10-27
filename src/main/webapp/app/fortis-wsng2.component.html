@@ -42,6 +42,9 @@
     <div class="row">
       <div class="col-md-2">
 
+
+        
+
         <div class="list-group visible-md-block visible-lg-block">
 
           <div *ngIf="enableUserDevice">
@@ -63,7 +66,77 @@
           
         </div>
 
+
+        <!--
+
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+          <div *ngIf="enableUserDevice">
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 使用者設備管理
+                </a>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+              <div class="list-group">
+                  <a [routerLink]="['/forti-user-device-manage']" class="list-group-item">使用者設備網卡管理</a>
+                  <a [routerLink]="['/user-device-log']" class="list-group-item">使用者設備操作紀錄</a>
+                </div>
+            </div>
+          </div>
+
+          </div>
+
+
+          <div *ngIf="enableGuest">
+
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 訪客管理
+                </a>
+              </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="list-group">
+                  <a [routerLink]="['/guest']" class="list-group-item">訪客管理</a>
+                  <a [routerLink]="['/guest-log']" class="list-group-item">訪客操作紀錄</a>
+                </div>
+            </div>
+          </div>
+          
+          </div>
+
+  
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+              <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> 系統設定
+                </a>
+              </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="list-group">
+                  <a [routerLink]="['/sys-user']" class="list-group-item">系統使用者管理</a>
+                  <a [routerLink]="['/sys-setting']" class="list-group-item">系統參數設定</a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+      -->
+
       </div>
+
+      
+
+
 
       <div class="col-md-10">
         <router-outlet></router-outlet>

@@ -23,8 +23,7 @@ import com.hoyoung.fortis.services.UserDeviceService;
 
 /**
  * @author A8303
- * 每隔20秒執行一次將當天準備中的List 新增寫入 Fortinet
- * 同時，變更狀態
+ * 執行不在職清單自動移除作業
  */
 @Component
 public class Batch003 extends BaseBatch implements Batch{
@@ -93,18 +92,13 @@ public class Batch003 extends BaseBatch implements Batch{
 						restTemplateService.deleteConfigUserDevice(deviceName);
 						restTemplateService.reenableSystemInterface();
 					} catch (Exception e) {
-						e.printStackTrace();
 						log.error("連線設備執行指令失敗!! ", e);
-						//return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
 					}
 
 					// 紀錄 Log
-					userDeviceLogService.saveUserDeviceLog("DELETE", "BATCH003", "離職自動化", deviceName);
+					userDeviceLogService.saveUserDeviceLog("DELETE", "BATCH003", "自動刪除", deviceName);
 
 					userDeviceService.delete(deviceName);
-					
-					
-					
 				} 
 				
 			}

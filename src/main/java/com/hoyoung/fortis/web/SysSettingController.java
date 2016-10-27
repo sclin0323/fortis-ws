@@ -38,7 +38,6 @@ public class SysSettingController extends BaseController {
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView read(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 
-		log.info("test.......");
 		Map map = sysSettingService.fetchById("SETTING001");
 		if (map == null) {
 			getFailureModelAndView(model, "設定載入失敗!! 請初始化設定");
@@ -52,17 +51,13 @@ public class SysSettingController extends BaseController {
 			HttpServletResponse response, @RequestBody SysSettingCommand cmd) {
 
 		try {
-			HttpEntity<PythonResponse> pr = restTemplateService.getSystemStatus();
-			model.put("data", pr.getBody());
-			model.put("status", BaseController.STATUS_SUCCESS);
+			PythonResponse res = restTemplateService.getSystemStatus();
+			model.put("data", res);
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.error("連線存取設備狀態失敗!! ", e);
-			return getFailureModelAndView(model, "連線存取設備狀態失敗!! ");
+			return getFailureModelAndView(model, e.getMessage());
 		}
-
-		ModelAndView mav = new ModelAndView("jsonView", model);
-		return mav;
+		
+		return getSuccessModelAndView(model);
 	}
 
 

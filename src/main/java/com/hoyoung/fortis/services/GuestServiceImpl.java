@@ -180,7 +180,7 @@ public class GuestServiceImpl extends BaseServiceImpl implements GuestService {
 		
 		String text = ""
 				+ "<html><body>"
-				+ "<h1>您的無線網路臨時帳密如下：</h1>"
+				+ "<h2>您的無線網路臨時帳密如下：</h2>"
 				+ "<table style='border -color: #666;' cellpadding=10'>"
 				+ "<tr style='background: #eee;'>"
 				+ "<td><strong> 帳號 :</strong></td>"

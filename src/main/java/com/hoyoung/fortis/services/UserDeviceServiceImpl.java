@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,9 @@ public class UserDeviceServiceImpl extends BaseServiceImpl implements UserDevice
 				Restrictions.like("applicantId", word),
 				Restrictions.like("macAddress", word), 
 				Restrictions.like("applicantName", word)));
+		
+		detachedCriteria.addOrder(Order.desc("applicantDate"));
+		detachedCriteria.addOrder(Order.desc("applicantTime"));
 
 		List dataList = fortisDAO.findByCriteria(detachedCriteria, start, limit);
 

@@ -70,21 +70,14 @@ public class UserDeviceController extends BaseController {
 		} catch (Exception e) {
 			return getFailureModelAndView(model, e.getMessage());
 		}
-
-		// 新增 Fortinet : User Device and Group
+		
 		try {
-			PythonResponse pr = restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
-			// 檢查回傳的資料，使否出現網路卡號存在失敗
-			if (restTemplateService.validErrorCode(pr, -15) == false) {
-				return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
-			}
+			restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
 			restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName(), cmd.getDeviceGroup());
-
 			restTemplateService.reenableSystemInterface();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch(Exception e) {
 			log.error("連線設備執行指令失敗!! ", e);
-			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
+			return getFailureModelAndView(model, e.getMessage());
 		}
 
 		// 新增 User Device
@@ -127,17 +120,13 @@ public class UserDeviceController extends BaseController {
 
 			return getSuccessModelAndView(model, map);
 		}
-
+		
 		try {
-			PythonResponse r1 = restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
-			// 檢查回傳的資料，使否出現網路卡號存在失敗
-			if (restTemplateService.validErrorCode(r1, -15) == false) {
-				return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
+			restTemplateService.reenableSystemInterface();
+		} catch(Exception e) {
 			log.error("連線設備執行指令失敗!! ", e);
-			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
+			return getFailureModelAndView(model, e.getMessage());
 		}
 
 		// 更新資料

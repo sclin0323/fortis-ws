@@ -18,6 +18,10 @@ public class TestDate {
 		SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd HH mm ss sss");
 		Date date2 = new Date(Long.parseLong(str2));
 		System.out.println(sf2.format(date2));
+		
+		
+		
+		
 	}
 
 }

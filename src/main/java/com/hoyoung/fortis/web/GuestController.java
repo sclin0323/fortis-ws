@@ -44,14 +44,6 @@ public class GuestController extends BaseController {
 
 	@Autowired
 	private RestTemplateService restTemplateService;
-	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public @ResponseBody ModelAndView test(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-		
-		List dataList = guestService.fetchByApplicantId("test1");
-		
-		return getSuccessModelAndView(model, dataList, dataList.size());
-	}
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public @ResponseBody ModelAndView read(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
@@ -85,6 +77,9 @@ public class GuestController extends BaseController {
 		String guestId = date.format(formatter);
 		cmd.setGuestId(cmd.getApplicantId()+"-"+guestId);
 		cmd.setGuestPwd(guestId);
+		
+		// testing
+		cmd.setGuestGroup("test2");
 
 		// 驗證新增資料
 		try {
@@ -93,18 +88,12 @@ public class GuestController extends BaseController {
 			return getFailureModelAndView(model, e.getMessage());
 		}
 
-		// 新增 Fortinet : User Device and Group
+		// 新增 Fortinet : Guest
 		try {
-			//PythonResponse pr = restTemplateService.editConfigUserLocal(cmd.getGuestId(), cmd.getGuestPwd());
-			// 檢查回傳的資料，使否出現網路卡號存在失敗
-			//if (restTemplateService.validErrorCode(pr, -15) == false) {
-			//	return getFailureModelAndView(model, "該網卡網路設備已經存在，新增失敗。 [Return code -15]");
-			//}
-			//restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName(), cmd.getDeviceGroup());
-
-			//restTemplateService.reenableSystemInterface();
+			restTemplateService.editConfigUserLocal(cmd.getGuestId(), cmd.getGuestPwd());
+			restTemplateService.appendConfigUserGroups(cmd.getGuestId(), cmd.getGuestGroup());
+			restTemplateService.reenableSystemInterface();
 		} catch (Exception e) {
-			e.printStackTrace();
 			log.error("連線設備執行指令失敗!! ", e);
 			return getFailureModelAndView(model, "連線設備執行指令失敗!! ");
 		}
@@ -131,12 +120,15 @@ public class GuestController extends BaseController {
 		}
 
 		String guestId = request.getParameter("guestId");
+		String guestGroup = request.getParameter("guestGroup");
+		
+		guestGroup = "test2"; // testing
 		
 		
 		try {
-			//restTemplateService.unselectConfigUserDeviceGroups(deviceName, deviceGroup);
-			//restTemplateService.deleteConfigUserLocal(guestId);
-			//restTemplateService.reenableSystemInterface();
+			restTemplateService.unselectConfigUserGroups(guestId, guestGroup);
+			restTemplateService.deleteConfigUserLocal(guestId);
+			restTemplateService.reenableSystemInterface();
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("連線設備執行指令失敗!! ", e);
@@ -148,8 +140,6 @@ public class GuestController extends BaseController {
 				
 		Map map = guestService.delete(guestId);
 		
-		
-
 		return getSuccessModelAndView(model, map);
 	}
 }
