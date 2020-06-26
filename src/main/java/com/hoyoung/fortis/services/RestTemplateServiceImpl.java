@@ -57,7 +57,7 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	@Override
 	public PythonResponse editConfigUserDevice(String deviceName, String macAddress) {
 		String command = "conf vdom \n edit wireless-0 \n config user device \n edit " + deviceName + " \n set mac "
-				+ macAddress + " \n next \n end \n";
+				+ macAddress + " \n set type other-network-device \n next \n end \n";
 
 		return sendRequestToFortinet(command);
 	}
