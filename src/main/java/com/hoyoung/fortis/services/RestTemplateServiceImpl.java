@@ -56,34 +56,39 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	// For Config User Device
 	@Override
 	public PythonResponse editConfigUserDevice(String deviceName, String macAddress) {
-		String command = "conf vdom \n edit wireless-0 \n config user device \n edit " + deviceName + " \n set mac "
-				+ macAddress + " \n set type other-network-device \n next \n end \n";
+		//String command = "conf vdom \n edit wireless-0 \n config user device \n edit " + deviceName + " \n set mac " + macAddress + " \n set type other-network-device \n next \n end \n";
+
+		String command = "conf vdom \n edit wireless-0 \n config firewall address \n edit " + deviceName + " \n set start-mac " + macAddress + " \n set type mac \n next \n end \n";
 
 		return sendRequestToFortinet(command);
 	}
 
 	@Override
 	public PythonResponse appendConfigUserDeviceGroups(String deviceName, String deviceGroup) {
+		//String command = "conf vdom \n edit wireless-0 \n config user device-group \n edit " + deviceGroup + " \n append member " + deviceName + " \n next \n end \n end \n exit \n";
 
-		String command = "conf vdom \n edit wireless-0 \n config user device-group \n edit " + deviceGroup
-				+ " \n append member " + deviceName + " \n next \n end \n end \n exit \n";
+		String command = "conf vdom \n edit wireless-0 \n config firewall addrgrp \n edit " + deviceGroup + " \n append member " + deviceName + " \n next \n end \n end \n exit \n";
 
 		return sendRequestToFortinet(command);
 	}
 
 	@Override
 	public PythonResponse unselectConfigUserDeviceGroups(String deviceName, String deviceGroup) {
-		String command = "conf vdom \n edit wireless-0 \n config user device-group \n edit " + deviceGroup
-				+ " \n unselect member " + deviceName + " \n next \n end \n end \n exit \n";
+		//String command = "conf vdom \n edit wireless-0 \n config user device-group \n edit " + deviceGroup + " \n unselect member " + deviceName + " \n next \n end \n end \n exit \n";
 
+		String command = "conf vdom \n edit wireless-0 \n config firewall addrgrp \n edit " + deviceGroup + " \n unselect member " + deviceName + " \n next \n end \n end \n exit \n";
+
+		
 		return sendRequestToFortinet(command);
 	}
 
 	@Override
 	public PythonResponse deleteConfigUserDevice(String deviceName) {
-		String command = "conf vdom \n edit wireless-0 \n config user device \n delete " + deviceName
-				+ " \n end \n end \n exit";
+		//String command = "conf vdom \n edit wireless-0 \n config user device \n delete " + deviceName + " \n end \n end \n exit";
 
+		String command = "conf vdom \n edit wireless-0 \n config firewall address \n delete " + deviceName + " \n end \n end \n exit";
+
+		
 		return sendRequestToFortinet(command);
 	}
 	
