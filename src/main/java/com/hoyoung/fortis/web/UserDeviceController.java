@@ -74,7 +74,7 @@ public class UserDeviceController extends BaseController {
 		try {
 			restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
 			restTemplateService.appendConfigUserDeviceGroups(cmd.getDeviceName(), cmd.getDeviceGroup());
-			restTemplateService.reenableSystemInterface();
+			//restTemplateService.reenableSystemInterface();
 		} catch(Exception e) {
 			log.error("連線設備執行指令失敗!! ", e);
 			return getFailureModelAndView(model, e.getMessage());

@@ -58,8 +58,8 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	public PythonResponse editConfigUserDevice(String deviceName, String macAddress) {
 		//String command = "conf vdom \n edit wireless-0 \n config user device \n edit " + deviceName + " \n set mac "
 		//		+ macAddress + " \n next \n end \n";
-
-		String command = "";
+		
+		String command = "config firewall address \n edit "+deviceName+" \n set type mac \n set macaddr "+macAddress+" \n end";
 
 		return sendRequestToFortinet(command);
 	}
@@ -67,8 +67,10 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	@Override
 	public PythonResponse appendConfigUserDeviceGroups(String deviceName, String deviceGroup) {
 
-		String command = "conf vdom \n edit wireless-0 \n config user device-group \n edit " + deviceGroup
-				+ " \n append member " + deviceName + " \n next \n end \n end \n exit \n";
+		//String command = "conf vdom \n edit wireless-0 \n config user device-group \n edit " + deviceGroup
+		//		+ " \n append member " + deviceName + " \n next \n end \n end \n exit \n";
+
+		String command = "config firewall addrgrp \n edit "+deviceGroup+" \n append member "+deviceName+" \n end";
 
 		return sendRequestToFortinet(command);
 	}
