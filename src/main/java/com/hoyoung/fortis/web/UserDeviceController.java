@@ -123,7 +123,7 @@ public class UserDeviceController extends BaseController {
 		
 		try {
 			restTemplateService.editConfigUserDevice(cmd.getDeviceName(), cmd.getMacAddress());
-			restTemplateService.reenableSystemInterface();
+			//restTemplateService.reenableSystemInterface();
 		} catch(Exception e) {
 			log.error("連線設備執行指令失敗!! ", e);
 			return getFailureModelAndView(model, e.getMessage());
@@ -153,7 +153,7 @@ public class UserDeviceController extends BaseController {
 		try {
 			restTemplateService.unselectConfigUserDeviceGroups(deviceName, deviceGroup);
 			restTemplateService.deleteConfigUserDevice(deviceName);
-			restTemplateService.reenableSystemInterface();
+			//restTemplateService.reenableSystemInterface();
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("連線設備執行指令失敗!! ", e);
