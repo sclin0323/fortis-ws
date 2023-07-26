@@ -59,8 +59,10 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		
 		//String command = "conf vdom \n edit wireless-0 \n config firewall address \n edit " + deviceName + " \n set type mac \n set start-mac " + macAddress + "\n next \n end \n";
 
-		String command = "conf vdom \n edit wireless-0 \n config firewall address \n edit " + deviceName + " \n set type mac \n set start-mac " + macAddress + " \n set end-mac "+macAddress+" \n next \n end \n";
+		//String command = "conf vdom \n edit wireless-0 \n config firewall address \n edit " + deviceName + " \n set type mac \n set start-mac " + macAddress + " \n set end-mac "+macAddress+" \n next \n end \n";
 
+		// 2023-07-26
+		String command = "config firewall address \n edit " + deviceName + " \n set type mac \n set macaddr " + macAddress + "\n end \n";
 		
 		return sendRequestToFortinet(command);
 	}
