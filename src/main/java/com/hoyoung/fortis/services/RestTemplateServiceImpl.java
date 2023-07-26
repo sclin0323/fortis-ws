@@ -70,7 +70,12 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	@Override
 	public PythonResponse appendConfigUserDeviceGroups(String deviceName, String deviceGroup) {
 		
-		String command = "conf vdom \n edit wireless-0 \n config firewall addrgrp \n edit " + deviceGroup + " \n append member " + deviceName + " \n next \n end \n end \n exit \n";
+		// String command = "conf vdom \n edit wireless-0 \n config firewall addrgrp \n edit " + deviceGroup + " \n append member " + deviceName + " \n next \n end \n end \n exit \n";
+
+		//String command = "conf vdom \n edit wireless-0 \n config firewall addrgrp \n edit " + deviceGroup + " \n append member " + deviceName + " \n next \n end \n end \n exit \n";
+
+		// 2023-07-26
+		String command = "config firewall addrgrp \n edit "+deviceGroup+" \n append member "+deviceName+" \n end \n";
 
 		return sendRequestToFortinet(command);
 	}
