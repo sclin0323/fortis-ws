@@ -47,11 +47,11 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 		return sendRequestToFortinet(command);
 	}
 
-	//@Override
-	//public PythonResponse reenableSystemInterface() {
-	//	String command = "conf vdom \n edit wireless-0 \n config system interface \n edit port34 \n set device-identification disable \n set device-identification enable \n end \n exit \n";
-	//	return sendRequestToFortinet(command);
-	//}
+	@Override
+	public PythonResponse reenableSystemInterface() {
+		String command = "conf vdom \n edit wireless-0 \n config system interface \n edit port34 \n set device-identification disable \n set device-identification enable \n end \n exit \n";
+		return sendRequestToFortinet(command);
+	}
 
 	// For Config User Device
 	@Override
