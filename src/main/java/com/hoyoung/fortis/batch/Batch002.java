@@ -53,7 +53,7 @@ public class Batch002 extends BaseBatch implements Batch{
 					// 使用日過期，自動刪除帳號
 					restTemplateService.unselectConfigUserGroups(guestId, guestGroup);
 					restTemplateService.deleteConfigUserLocal(guestId);
-					restTemplateService.reenableSystemInterface();
+					//restTemplateService.reenableSystemInterface();
 					
 					// 紀錄 Log
 					guestLogService.saveGuestLog("DELETE", "BATCH002", "自動刪除", guestId);

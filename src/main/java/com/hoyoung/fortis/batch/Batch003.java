@@ -90,7 +90,7 @@ public class Batch003 extends BaseBatch implements Batch{
 					try {
 						restTemplateService.unselectConfigUserDeviceGroups(deviceName, deviceGroup);
 						restTemplateService.deleteConfigUserDevice(deviceName);
-						restTemplateService.reenableSystemInterface();
+						//restTemplateService.reenableSystemInterface();
 					} catch (Exception e) {
 						log.error("連線設備執行指令失敗!! ", e);
 					}
