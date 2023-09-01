@@ -57,10 +57,11 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	@Override
 	public PythonResponse editConfigUserDevice(String deviceName, String macAddress) {
 		
-		//String command = "conf vdom \n edit wireless-0 \n config firewall address \n edit " + deviceName + " \n set type mac \n set start-mac " + macAddress + "\n next \n end \n";
+		// system1 
+		String command = "conf vdom \n edit wireless-0 \n config firewall address \n edit " + deviceName + " \n set type mac \n set macaddr " + macAddress + "\n end \n end \n";
 
-		// 2023-07-26
-		String command = "config firewall address \n edit " + deviceName + " \n set type mac \n set macaddr " + macAddress + "\n end \n";
+		// system2
+		//String command = "config firewall address \n edit " + deviceName + " \n set type mac \n set macaddr " + macAddress + "\n end \n";
 		
 		return sendRequestToFortinet(command);
 	}
@@ -68,10 +69,11 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	@Override
 	public PythonResponse appendConfigUserDeviceGroups(String deviceName, String deviceGroup) {
 		
-		// String command = "conf vdom \n edit wireless-0 \n config firewall addrgrp \n edit " + deviceGroup + " \n append member " + deviceName + " \n next \n end \n end \n exit \n";
+		// system1
+		String command = "conf vdom \n edit wireless-0 \n config firewall addrgrp \n edit " + deviceGroup + " \n append member " + deviceName + " \n end \n end \n exit \n";
 
-		// 2023-07-26
-		String command = "config firewall addrgrp \n edit "+deviceGroup+" \n append member "+deviceName+" \n end \n";
+		// system2
+		//String command = "config firewall addrgrp \n edit "+deviceGroup+" \n append member "+deviceName+" \n end \n";
 
 		return sendRequestToFortinet(command);
 	}
@@ -79,9 +81,11 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	@Override
 	public PythonResponse unselectConfigUserDeviceGroups(String deviceName, String deviceGroup) {
 		
-		//String command = "conf vdom \n edit wireless-0 \n config firewall addrgrp \n edit " + deviceGroup + " \n unselect member " + deviceName + " \n next \n end \n end \n exit \n";
+		// system1
+		String command = "conf vdom \n edit wireless-0 \n config firewall addrgrp \n edit " + deviceGroup + " \n unselect member " + deviceName + " \n end \n end \n exit \n";
 
-		String command = "config firewall addrgrp \n edit " + deviceGroup + " \n unselect member " + deviceName + " \n end \n";
+		// system2
+		//String command = "config firewall addrgrp \n edit " + deviceGroup + " \n unselect member " + deviceName + " \n end \n";
 
 
 		return sendRequestToFortinet(command);
@@ -90,9 +94,11 @@ public class RestTemplateServiceImpl implements RestTemplateService {
 	@Override
 	public PythonResponse deleteConfigUserDevice(String deviceName) {
 		
-		//String command = "conf vdom \n edit wireless-0 \n config firewall address \n delete " + deviceName + " \n end \n end \n exit";
+		// system1
+		String command = "conf vdom \n edit wireless-0 \n config firewall address \n delete " + deviceName + " \n end \n end \n exit";
 
-		String command = "config firewall address \n delete " + deviceName + " \n end \n";
+		// system2
+		//String command = "config firewall address \n delete " + deviceName + " \n end \n";
 
 
 		return sendRequestToFortinet(command);
